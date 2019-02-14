@@ -40,7 +40,7 @@ date_time = str(datetime.date.today()) + '_' + \
 env_name = "../env/1_Sokoban/Windows/Sokoban"
 
 save_path = "../saved_models/" + date_time + "_DQN"
-load_path = "../saved_models/2019-02-05_17_40_27_DQN/model/model.ckpt"
+load_path = "../saved_models/2019-02-14_1_8_8_DQN/model/model.ckpt"
 
 class Model():
     def __init__(self, state_size, action_size, learning_rate, model_name):
@@ -203,8 +203,7 @@ if __name__ == '__main__':
     for episode in range(run_episode + test_episode):
         if episode > run_episode:
             train_mode = False
-
-        env_info = env.reset(train_mode=train_mode)[default_brain]
+            env_info = env.reset(train_mode=train_mode)[default_brain]
         
         state = np.uint8(255 * env_info.visual_observations[0])
         episode_rewards = 0
