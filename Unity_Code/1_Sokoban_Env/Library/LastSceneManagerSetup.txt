@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/ML-Agents/Examples/Sokoban_v0.6.0/Scenes/Sokoban.unity
+  isLoaded: 1
+  isActive: 1
