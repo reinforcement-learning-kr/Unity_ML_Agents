@@ -37,10 +37,11 @@ date_time = str(datetime.date.today()) + '_' + \
             str(datetime.datetime.now().minute) + '_' + \
             str(datetime.datetime.now().second)
 
-env_name = "../env/1_Sokoban/Windows/Sokoban"
+game = "Sokoban"
+env_name = "../env/" + game + "/Windows/" + game
 
-save_path = "../saved_models/" + date_time + "_DQN"
-load_path = "../saved_models/2019-02-14_1_8_8_DQN/model/model.ckpt"
+save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
+load_path = "../saved_models/" + game + "/2019-02-14_1_8_8_DQN/model/model.ckpt"
 
 class Model():
     def __init__(self, state_size, action_size, learning_rate, model_name):
@@ -201,7 +202,7 @@ if __name__ == '__main__':
     env_info = env.reset(train_mode=train_mode, config=env_config)[default_brain]
 
     for episode in range(run_episode + test_episode):
-        if episode > run_episode:
+        if episode == run_episode:
             train_mode = False
             env_info = env.reset(train_mode=train_mode)[default_brain]
         
