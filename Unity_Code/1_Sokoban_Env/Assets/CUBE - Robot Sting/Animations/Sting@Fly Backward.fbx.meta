@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: fdb59007ca8cf5d489b63b77f7338ddd
+timeCreated: 1517479291
+licenseType: Store
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Sting
+    100002: //RootNode
+    100004: Sting_eye_ctrl
+    100006: Sting_eye_jt
+    100008: Sting_head_ctrl
+    100010: Sting_head_jt
+    100012: Sting_L_wing_ctrl
+    100014: Sting_L_wing_jt
+    100016: Sting_master_ctrl
+    100018: Sting_master_jt
+    100020: Sting_R_wing_ctrl
+    100022: Sting_R_wing_jt
+    100024: Sting_root_ctrl
+    100026: Sting_root_jt
+    100028: Sting_tail_ctrl
+    100030: Sting_tail_jt
+    400000: Sting
+    400002: //RootNode
+    400004: Sting_eye_ctrl
+    400006: Sting_eye_jt
+    400008: Sting_head_ctrl
+    400010: Sting_head_jt
+    400012: Sting_L_wing_ctrl
+    400014: Sting_L_wing_jt
+    400016: Sting_master_ctrl
+    400018: Sting_master_jt
+    400020: Sting_R_wing_ctrl
+    400022: Sting_R_wing_jt
+    400024: Sting_root_ctrl
+    400026: Sting_root_jt
+    400028: Sting_tail_ctrl
+    400030: Sting_tail_jt
+    4300000: Sting
+    7400000: Fly Backward
+    9500000: //RootNode
+    13700000: Sting
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fly Backward
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
