@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/1_Sokoban/Scenes/Sokoban.unity
+  isLoaded: 1
+  isActive: 1
