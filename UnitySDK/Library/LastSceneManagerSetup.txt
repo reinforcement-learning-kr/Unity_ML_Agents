@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/1_Sokoban/Scenes/Sokoban.unity
+- path: Assets/5_Dodge/Dodge.unity
   isLoaded: 1
   isActive: 1

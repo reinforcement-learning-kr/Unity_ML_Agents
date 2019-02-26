@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ML-Agents/Examples/Sokoban/Scenes/Sokoban.unity
+    path: Assets/1_Sokoban/Sokoban.unity
     guid: 7c777442467e245108558a5155153927
   m_configObjects: {}
