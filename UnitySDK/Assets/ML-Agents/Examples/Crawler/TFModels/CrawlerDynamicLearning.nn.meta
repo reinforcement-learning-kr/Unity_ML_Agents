@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 94d1889cee00f4361b74cbc4eb129f11
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: Assets/ML-Agents/Examples/Crawler/TFModels/CrawlerDynamicLearning.nn
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 83221ad3db87f4b3b91b041047cb2bc5, type: 3}

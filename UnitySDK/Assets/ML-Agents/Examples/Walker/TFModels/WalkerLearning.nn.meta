@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 097040deda0de41ddb3050c60d8cfc67
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: Assets/ML-Agents/Examples/Walker/TFModels/WalkerLearning.nn
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 83221ad3db87f4b3b91b041047cb2bc5, type: 3}
