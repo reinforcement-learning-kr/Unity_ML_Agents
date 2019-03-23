@@ -44,7 +44,7 @@ save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
 load_path = "../saved_models/" + game + "/2019-02-14_1_8_8_DQN/model/model.ckpt"
 
 class Model():
-    def __init__(self, state_size, action_size, learning_rate, model_name):
+    def __init__(self, model_name):
         self.state_size = state_size
         self.action_size = action_size
 
@@ -78,14 +78,12 @@ class Model():
         self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, model_name)
 
 class DQNAgent():
-    def __init__(self, state_size, action_size, mem_maxlen, save_path, load_path, 
-                 learning_rate, load_model, batch_size, run_episode, 
-                 epsilon, epsilon_min, discount_factor):
+    def __init__(self):
         self.state_size = state_size
         self.action_size = action_size
 
-        self.model = Model(state_size, action_size, learning_rate, "Q")
-        self.target_model = Model(state_size, action_size, learning_rate, "target")
+        self.model = Model("Q")
+        self.target_model = Model("target")
 
         self.memory = deque(maxlen=mem_maxlen)
 
@@ -96,7 +94,7 @@ class DQNAgent():
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
 
-        self.epsilon = epsilon
+        self.epsilon = epsilon_init
         self.epsilon_min = epsilon_min
         self.discount_factor = discount_factor
 
@@ -182,18 +180,7 @@ if __name__ == '__main__':
     default_brain = env.brain_names[0]
     brain = env.brains[default_brain]
 
-    agent = DQNAgent(state_size,
-                     action_size,
-                     mem_maxlen,
-                     save_path,
-                     load_path,
-                     learning_rate,
-                     load_model,
-                     batch_size,
-                     run_episode,
-                     epsilon_init,
-                     epsilon_min,
-                     discount_factor)
+    agent = DQNAgent()
 
     step = 0
     rewards = []
