@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - agent1
+  - agent2
+  - Wall
+  - AgentB
+  - GoalA
+  - GoalB
+  - Ball
   layers:
   - Default
   - TransparentFX

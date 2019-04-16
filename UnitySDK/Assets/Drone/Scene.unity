@@ -344,6 +344,7 @@ MonoBehaviour:
   brain: {fileID: 11400000, guid: 334604c84ade80446afe64ad612fa449, type: 2}
   agentParameters:
     agentCameras: []
+    agentRenderTextures: []
     maxStep: 5000
     resetOnDone: 1
     onDemandDecision: 0
@@ -438,7 +439,8 @@ MonoBehaviour:
   broadcastHub:
     broadcastingBrains:
     - {fileID: 11400000, guid: c769a6f62ef46c64a8aca95b01a2c2fd, type: 2}
-    _brainsToControl: []
+    _brainsToControl:
+    - {fileID: 11400000, guid: c769a6f62ef46c64a8aca95b01a2c2fd, type: 2}
   maxSteps: 5000
   trainingConfiguration:
     width: 600

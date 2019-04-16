@@ -10,6 +10,7 @@ public class PongAgent : Agent {
     [Header("Pong Agent Setting")]
     public GameObject Ball;
     public GameObject Opponent;
+    public bool invertX;
 
     private Rigidbody RbBall;
     private Rigidbody RbAgent;
@@ -20,13 +21,18 @@ public class PongAgent : Agent {
     private const int Down = 2;
 
     Vector3 ResetPos;
+    private int invertMult;
+
 
     public override void InitializeAgent()
     {
         RbAgent = GetComponent<Rigidbody>();
         RbOpponent = Opponent.GetComponent<Rigidbody>();
         RbBall = Ball.GetComponent<Rigidbody>();
-        ResetPos = transform.position;        
+
+        ResetPos = transform.position;
+
+        invertMult = invertX ? 1 : -1;
     }    
 
     public override void CollectObservations()
@@ -96,10 +102,12 @@ public class PongAgent : Agent {
             RbAgent.velocity = Vector3.zero;
             RbAgent.angularVelocity = Vector3.zero;
         }
+
         if (col.gameObject.CompareTag("Ball"))
         {
             AddReward(0.5f);
         }
+
     }
 }
 

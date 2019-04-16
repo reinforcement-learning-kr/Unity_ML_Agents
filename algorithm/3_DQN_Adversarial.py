@@ -41,7 +41,7 @@ save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
 load_path = "../saved_models/" + game + "/2019-02-20_16_27_5_DQN/model/model.ckpt"
 
 class Model():
-    def __init__(self, state_size, action_size, learning_rate=0.00025, model_name="model"):
+    def __init__(self, model_name):
         self.state_size = state_size
         self.action_size = action_size
 
@@ -61,15 +61,14 @@ class Model():
         self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, model_name)
 
 class DQNAgent():
-    def __init__(self, state_size, action_size, mem_maxlen, save_path, load_path, learning_rate=0.00025,
-                 load_model=True, batch_size=32, run_episode=10000, epsilon=1.0, epsilon_min=0.1, discount_factor=0.99):
+    def __init__(self):
         self.state_size = state_size
         self.action_size = action_size
 
-        self.model1 = Model(state_size, action_size, model_name="Q1", learning_rate=learning_rate)
-        self.target_model1 = Model(state_size, action_size, model_name="target1")
-        self.model2 = Model(state_size, action_size, model_name="Q2", learning_rate=learning_rate)
-        self.target_model2 = Model(state_size, action_size, model_name="target2")
+        self.model1 = Model("Q1")
+        self.target_model1 = Model("target1")
+        self.model2 = Model("Q2"e)
+        self.target_model2 = Model("target2")
 
         self.memory1 = deque(maxlen=mem_maxlen)
         self.memory2 = deque(maxlen=mem_maxlen)
@@ -86,7 +85,7 @@ class DQNAgent():
         self.discount_factor = discount_factor
 
         self.load_model = load_model
-        self.Saver = tf.train.Saver(max_to_keep=5)
+        self.Saver = tf.train.Saver
         self.save_path = save_path
         self.load_path = load_path
         self.Summary, self.Merge = self.make_Summary()
@@ -102,8 +101,10 @@ class DQNAgent():
             random_action2 = np.random.randint(0, self.action_size)
             return random_action1, random_action2
         else:
-            predict1 = self.sess.run(self.model1.predict, feed_dict={self.model1.input: [state1]})
-            predict2 = self.sess.run(self.model2.predict, feed_dict={self.model2.input: [state2]})
+            predict1 = self.sess.run(self.model1.predict, 
+                                     feed_dict={self.model1.input: [state1]})
+            predict2 = self.sess.run(self.model2.predict, 
+                                     feed_dict={self.model2.input: [state2]})
             return np.asscalar(predict1), predict2
 
     def append_sample(self, data1, data2):
@@ -134,7 +135,8 @@ class DQNAgent():
             dones1.append(mini_batch1[i][4])
 
         target1 = self.sess.run(self.model1.Q_Out, feed_dict={self.model1.input: states1})
-        target_val1 = self.sess.run(self.target_model1.Q_Out, feed_dict={self.target_model1.input: next_states1})
+        target_val1 = self.sess.run(self.target_model1.Q_Out, 
+                                    feed_dict={self.target_model1.input: next_states1})
 
         for i in range(self.batch_size):
             if dones1[i]:
@@ -143,7 +145,8 @@ class DQNAgent():
                 target1[i][actions1[i]] = rewards1[i] + self.discount_factor * np.amax(target_val1[i])
 
         _, loss1 = self.sess.run([self.model1.UpdateModel, self.model1.loss],
-                                feed_dict={self.model1.input: states1, self.model1.target_Q: target1})
+                                feed_dict={self.model1.input: states1, 
+                                           self.model1.target_Q: target1})
 
         mini_batch2 = random.sample(self.memory2, self.batch_size)
 
@@ -161,7 +164,8 @@ class DQNAgent():
             dones2.append(mini_batch2[i][4])
 
         target2 = self.sess.run(self.model2.Q_Out, feed_dict={self.model2.input: states2})
-        target_val2 = self.sess.run(self.target_model2.Q_Out, feed_dict={self.target_model2.input: next_states2})
+        target_val2 = self.sess.run(self.target_model2.Q_Out, 
+                                    feed_dict={self.target_model2.input: next_states2})
 
         for i in range(self.batch_size):
             if dones2[i]:
@@ -170,7 +174,8 @@ class DQNAgent():
                 target2[i][actions2[i]] = rewards2[i] + self.discount_factor * np.amax(target_val2[i])
 
         _, loss2 = self.sess.run([self.model2.UpdateModel, self.model2.loss],
-                                feed_dict={self.model2.input: states2, self.model2.target_Q: target2})
+                                feed_dict={self.model2.input: states2, 
+                                           self.model2.target_Q: target2})
 
         return loss1, loss2
 
@@ -196,7 +201,10 @@ class DQNAgent():
 
     def Write_Summray(self, reward1, loss1, reward2, loss2, episode):
         self.Summary.add_summary(
-            self.sess.run(self.Merge, feed_dict={self.summary_loss1: loss1, self.summary_reward1: reward1, self.summary_loss2: loss2, self.summary_reward2: reward2}), episode)
+            self.sess.run(self.Merge, feed_dict={self.summary_loss1: loss1, 
+                                                 self.summary_reward1: reward1, 
+                                                 self.summary_loss2: loss2, 
+                                                 self.summary_reward2: reward2}), episode)
 
 if __name__ == '__main__':
 
@@ -205,19 +213,10 @@ if __name__ == '__main__':
     default_brain = env.brain_names[0]
     brain = env.brains[default_brain]
 
-    agent = DQNAgent(state_size,
-                     action_size,
-                     mem_maxlen,
-                     save_path,
-                     load_path,
-                     learning_rate,
-                     load_model,
-                     batch_size,
-                     run_episode,
-                     epsilon_min=epsilon_min,
-                     discount_factor=discount_factor)
+    agent = DQNAgent()
 
     step = 0
+
     rewards1 = []
     losses1 = []
     rewards2 = []
@@ -289,9 +288,12 @@ if __name__ == '__main__':
         rewards2.append(episode_rewards2)
 
         if episode % print_interval == 0 and episode != 0:
-            print("step: {} / episode: {} / reward1: {:.2f} / loss1: {:.4f} / reward2: {:.2f} / loss2: {:.4f} / epsilon: {:.3f} / memory_len:{}".format
-                  (step, episode, np.mean(rewards1), np.mean(losses1), np.mean(rewards2), np.mean(losses2), agent.epsilon, len(agent.memory1)))
-            agent.Write_Summray(np.mean(rewards1), np.mean(losses1), np.mean(rewards2), np.mean(losses2), episode)
+            print("step: {} / episode: {} / reward1: {:.2f} / loss1: {:.4f} / reward2: {:.2f} \\
+                  / loss2: {:.4f} / epsilon: {:.3f}".format(step, episode, np.mean(rewards1), 
+                  np.mean(losses1), np.mean(rewards2), np.mean(losses2), agent.epsilon)))
+            
+            agent.Write_Summray(np.mean(rewards1), np.mean(losses1), 
+                                np.mean(rewards2), np.mean(losses2), episode)
             rewards1 = []
             losses1 = []
             rewards2 = []

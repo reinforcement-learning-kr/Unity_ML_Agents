@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 349870066e6a0544391e2962e022f9be
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: Assets/Sokoban_Curriculum/TFModels/GridWorldLearning.nn
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 83221ad3db87f4b3b91b041047cb2bc5, type: 3}
