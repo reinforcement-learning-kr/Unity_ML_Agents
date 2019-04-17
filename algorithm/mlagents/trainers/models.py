@@ -4,11 +4,11 @@ import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.layers as c_layers
 
-logger = logging.getLogger("mlagents.envs")
+logger = logging.getLogger("mlagents.trainers")
 
 
 class LearningModel(object):
-    _version_number_ = 1
+    _version_number_ = 2
 
     def __init__(self, m_size, normalize, use_recurrent, brain, seed):
         tf.set_random_seed(seed)
