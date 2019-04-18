@@ -145,11 +145,15 @@ if __name__ == '__main__':
         buffer = agent.load_demo()
 
         # 버퍼에서 상태, 액션, 보상 가져오기
-        state, action, reward = np.array(buffer['vector_obs']), np.array(buffer['actions']), np.array(buffer['rewards'])
+        state = np.array(buffer['vector_obs'])
+        action = np.array(buffer['actions'])
+        reward = np.array(buffer['rewards'])
         
         # -1 보상을 받은 인덱스를 찾아 삭제 (양질의 데이터를 가져오기 위함)
         neg_idx = np.where(reward == -1)
-        state, action = np.delete(state, neg_idx, axis=0), np.delete(action, neg_idx, axis=0)
+        
+        state = np.delete(state, neg_idx, axis=0)
+        action = np.delete(action, neg_idx, axis=0)
 
         losses = []
         accuracies = []
