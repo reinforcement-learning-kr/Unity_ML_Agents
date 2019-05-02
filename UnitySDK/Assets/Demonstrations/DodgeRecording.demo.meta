@@ -1,9 +1,12 @@
 fileFormatVersion: 2
 guid: d6f56ca0872994247a4b58fdcfe1e065
 ScriptedImporter:
-  fileIDToRecycleName:
-    11400000: Assets/Demonstrations/DodgeRecording.demo
+  internalIDToNameTable:
+  - first:
+      114: 11400000
+    second: Assets/Demonstrations/DodgeRecording.demo
   externalObjects: {}
+  serializedVersion: 2
   userData: ' (MLAgents.Demonstration)'
   assetBundleName: 
   assetBundleVariant: 
