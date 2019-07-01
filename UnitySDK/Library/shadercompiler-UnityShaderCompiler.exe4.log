@@ -1,28 +1,4 @@
-Base path: C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data
+Base path: C:/Program Files/Unity/Hub/Editor/2019.1.1f1/Editor/Data
 Cmd: initializeCompiler
-Cmd: compileComputeKernel
-  api=4 insize=7985 outsize=1801 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=4264 outsize=1857 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=10663 outsize=4121 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=2595 outsize=193 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=1685 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=1329 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=1625 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=1357 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=1857 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21333 outsize=2129 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=14905 outsize=1353 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=14905 outsize=1773 ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=11846 outsize=1258 kw=SHADOWS_SPLIT_SPHERES pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
+  api=4 type=1 insize=1596 outsize=7294 kw=UNITY_PASS_FORWARDBASE DIRECTIONAL SHADOWS_SCREEN LIGHTPROBE_SH _EMISSION pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1

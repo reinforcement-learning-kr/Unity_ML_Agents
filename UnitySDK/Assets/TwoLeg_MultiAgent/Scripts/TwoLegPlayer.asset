@@ -19,9 +19,7 @@ MonoBehaviour:
     cameraResolutions: []
     vectorActionDescriptions:
     - 
-    - 
-    - 
-    vectorActionSpaceType: 1
+    vectorActionSpaceType: 0
   keyContinuousPlayerActions:
   - key: 97
     index: 0

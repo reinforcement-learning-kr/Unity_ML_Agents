@@ -5,8 +5,6 @@ using MLAgents;
 
 public class TemplateAgent : Agent {
 
-
-
     public override void CollectObservations()
     {
 

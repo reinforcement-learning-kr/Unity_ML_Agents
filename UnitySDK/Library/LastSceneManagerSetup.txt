@@ -1,4 +1,5 @@
 sceneSetups:
-- path: Assets/Drone/Scene.unity
+- path: Assets/TwoLeg_MultiAgent/Scene.unity
   isLoaded: 1
   isActive: 1
+  isSubScene: 0
