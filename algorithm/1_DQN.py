@@ -193,7 +193,7 @@ if __name__ == '__main__':
             train_mode = False
             env_info = env.reset(train_mode=train_mode)[default_brain]
         
-        state = np.uint8(255 * env_info.visual_observations[0])
+        state = np.uint8(255 * np.array(env_info.visual_observations[0]))
         episode_rewards = 0
         done = False
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
             action = agent.get_action(state, train_mode)
             env_info = env.step(action)[default_brain]
 
-            next_state = np.uint8(255 * env_info.visual_observations[0])
+            next_state = np.uint8(255 * np.array(env_info.visual_observations[0]))
             reward = env_info.rewards[0]
             episode_rewards += reward
             done = env_info.local_done[0]
