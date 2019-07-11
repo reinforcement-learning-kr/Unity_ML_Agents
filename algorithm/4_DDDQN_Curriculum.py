@@ -6,7 +6,6 @@ import tensorflow as tf
 import tensorflow.layers as layer
 from collections import deque
 from mlagents.envs import UnityEnvironment
-import logging
 
 ########################################
 state_size = [80, 80, 3]
@@ -39,9 +38,8 @@ date_time = str(datetime.date.today()) + '_' + \
             str(datetime.datetime.now().second)
 
 env_worker_id = 0
-env_name = "../envs/Sokoban_0_8/Sokoban"     # Window OS
-# env_name = "../envs/Sokoban_win_new_rewards_actions_4/Sokoban"     # Window OS
-# env_name = "../envs/Sokoban_linux_new_rewards_action_4/Sokoban" # Linux OS
+env_name = "../envs/SokobanCurriculum_Windows/SokobanCurriculum" # Window OS
+# env_name = "../envs/SokobanCurriculum_Linux/SokobanCurriculum" # Linux OS
 
 save_path = "saved_models/" + date_time + "_dddqn"
 load_path = "./saved_models/2019-02-18_17_39_4_dddqn/model/"
@@ -181,7 +179,7 @@ class DDDQNAgent():
     def train_model(self, done):
         if done:
             if self.epsilon > self.epsilon_min:
-                self.epsilon -= 1 / (self.run_episode - start_train_episode)
+                self.epsilon -= self.epsilon_decay
 
         mini_batch = random.sample(self.memory, self.batch_size)
 
@@ -282,6 +280,7 @@ if __name__ == '__main__':
 
     # 환경 및 변수 초기화
     env_info = env.reset(train_mode=train_mode, config=sokoban_reset_parameters[game_level])[default_brain]
+
     step = 0
     start_episode = 0
     rewards = deque(maxlen=print_interval)
@@ -295,7 +294,7 @@ if __name__ == '__main__':
             train_mode = False
             env_info = env.reset(train_mode=train_mode)[default_brain]
 
-        state = np.uint8(255 * env_info.visual_observations[0])
+        state = np.uint8(255 * np.array(env_info.visual_observations[0]))
         episode_rewards = 0
         done = False
         success = 0
@@ -304,7 +303,8 @@ if __name__ == '__main__':
             step += 1
             action = agent.get_action(state, train_mode)
             env_info = env.step(action)[default_brain]
-            next_state = np.uint8(255 * env_info.visual_observations[0])
+            next_state = np.uint8(255 * np.array(env_info.visual_observations[0]))
+
             reward = env_info.rewards[0]
             episode_rewards += reward
             done = env_info.local_done[0]
