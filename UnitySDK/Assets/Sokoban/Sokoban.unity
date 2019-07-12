@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -88,6 +95,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -142,8 +150,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   broadcastHub:
-    broadcastingBrains: []
-    _brainsToControl: []
+    broadcastingBrains:
+    - {fileID: 11400000, guid: 82da46c745b142646b211786b4b1b6b8, type: 2}
+    _brainsToControl:
+    - {fileID: 11400000, guid: 82da46c745b142646b211786b4b1b6b8, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -158,16 +168,24 @@ MonoBehaviour:
     timeScale: 1
     targetFrameRate: 60
   resetParameters:
-    resetParameters: []
+    resetParameters:
+    - key: gridSize
+      value: 5
+    - key: numObstacles
+      value: 1
+    - key: numGoals
+      value: 1
+    - key: numBoxes
+      value: 1
   actorObjs: []
   players: 
-  trueAgent: {fileID: 0}
+  trueAgent: {fileID: 2008405822}
   gridSize: 0
-  camObject: {fileID: 0}
-  agentPref: {fileID: 0}
-  boxPref: {fileID: 0}
-  goalPref: {fileID: 0}
-  pitPref: {fileID: 0}
+  camObject: {fileID: 231883441}
+  agentPref: {fileID: 1657514749044530, guid: 19693a140edea8748a7af10b3bca2026, type: 3}
+  boxPref: {fileID: 7680640176547182271, guid: bf87897b692fc534f9ac9a4bbe2d5b6e, type: 3}
+  goalPref: {fileID: 1508142483324970, guid: 3e7d533cfbb78514f8b0fe703a10878f, type: 3}
+  pitPref: {fileID: 1811317785436014, guid: 63cef4f41f5fba444b5f3f6ce0e6546e, type: 3}
 --- !u!4 &2047664
 Transform:
   m_ObjectHideFlags: 0
@@ -207,12 +225,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87755817}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.90925395, b: 0.66176474, a: 1}
   m_Intensity: 0.65
   m_Range: 17.56
   m_SpotAngle: 63
+  m_InnerSpotAngle: 47.542236
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -222,6 +241,24 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -229,12 +266,15 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &87755819
@@ -298,9 +338,10 @@ Camera:
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.39609292, g: 0.49962592, b: 0.6509434, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -519,9 +560,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -1230,8 +1272,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brain: {fileID: 11400000, guid: 82da46c745b142646b211786b4b1b6b8, type: 2}
   agentParameters:
-    agentCameras: []
-    maxStep: 0
+    agentCameras:
+    - {fileID: 489340228}
+    agentRenderTextures: []
+    maxStep: 200
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1

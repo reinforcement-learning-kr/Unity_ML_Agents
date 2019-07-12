@@ -17,8 +17,8 @@ MonoBehaviour:
     numStackedVectorObservations: 1
     vectorActionSize: 05000000
     cameraResolutions:
-    - width: 80
-      height: 80
+    - width: 84
+      height: 84
       blackAndWhite: 0
     vectorActionDescriptions:
     - 

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/TwoLeg_MultiAgent/Scene.unity
+- path: Assets/Sokoban/Sokoban.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
