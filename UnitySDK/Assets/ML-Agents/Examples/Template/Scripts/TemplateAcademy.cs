@@ -5,6 +5,11 @@ using MLAgents;
 
 public class TemplateAcademy : Academy {
 
+    public override void InitializeAcademy()
+    {
+        
+    }
+
     public override void AcademyReset()
     {
 

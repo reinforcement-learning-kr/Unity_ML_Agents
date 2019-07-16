@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,33 +13,47 @@ MonoBehaviour:
   m_Name: 3DBallPlayer
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 8
-    numStackedVectorObservations: 1
+    vectorObservationSize: 5
+    numStackedVectorObservations: 9
     vectorActionSize: 02000000
     cameraResolutions: []
     vectorActionDescriptions:
     - 
     - 
     vectorActionSpaceType: 1
-  isExternal: 0
-  keyContinuousPlayerActions: []
-  axisContinuousPlayerActions:
-  - axis: Horizontal
+  keyContinuousPlayerActions:
+  - key: 273
     index: 0
-    scale: 1
-  - axis: Vertical
+    value: 0.1
+  - key: 274
+    index: 0
+    value: -0.1
+  - key: 276
     index: 1
-    scale: 1
+    value: -0.1
+  - key: 275
+    index: 1
+    value: 0.1
+  axisContinuousPlayerActions:
+  - axis: Vertical
+    index: 0
+    scale: 0.1
+  - axis: Horizontal
+    index: 1
+    scale: 0.1
   discretePlayerActions:
-  - key: 12
-    branchIndex: 4
-    value: 0
-  - key: 0
-    branchIndex: 4
-    value: 0
-  - key: 0
+  - key: 32
     branchIndex: 0
     value: 0
-  - key: 0
+  - key: 273
     branchIndex: 0
+    value: 1
+  - key: 274
+    branchIndex: 0
+    value: 2
+  - key: 276
+    branchIndex: 1
     value: 0
+  - key: 275
+    branchIndex: 0
+    value: 1

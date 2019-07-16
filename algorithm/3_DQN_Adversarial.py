@@ -67,13 +67,15 @@ class DQNAgent():
         self.memory1 = deque(maxlen=mem_maxlen)
         self.memory2 = deque(maxlen=mem_maxlen)
 
-        self.sess = tf.Session()
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        self.sess = tf.Session(config=config)
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
 
         self.epsilon = epsilon_init
 
-        self.Saver = tf.train.Saver
+        self.Saver = tf.train.Saver()
         self.Summary, self.Merge = self.Make_Summary()
 
         self.update_target()
@@ -98,12 +100,12 @@ class DQNAgent():
         self.memory2.append((data2[0], data2[1], data2[2], data2[3], data2[4]))
 
     def save_model(self):
-        self.Saver.save(self.sess, save_path + "/model/model.ckpt")
+        self.Saver.save(self.sess, save_path + "/model/model")
 
     def train_model(self, model, target_model, memory, done):
         if done:
             if self.epsilon > epsilon_min:
-                self.epsilon -= 1 / (run_episode - start_train_episode)
+                self.epsilon -= 0.5 / (run_episode - start_train_episode)
 
         mini_batch = random.sample(memory, batch_size)
 
@@ -120,7 +122,7 @@ class DQNAgent():
             next_states.append(mini_batch[i][3])
             dones.append(mini_batch[i][4])
 
-        target = self.sess.run(model1.Q_Out, feed_dict={model.input: states})
+        target = self.sess.run(model.Q_Out, feed_dict={model.input: states})
         target_val = self.sess.run(target_model.Q_Out, 
                                     feed_dict={target_model.input: next_states})
 
@@ -192,7 +194,8 @@ if __name__ == '__main__':
     for episode in range(run_episode + test_episode):
         if episode == run_episode:
             train_mode = False
-            env_info = env.reset(train_mode=train_mode)
+        
+        env_info = env.reset(train_mode=train_mode)
         
         done = False
 
@@ -246,9 +249,10 @@ if __name__ == '__main__':
         rewards2.append(episode_rewards2)
 
         if episode % print_interval == 0 and episode != 0:
-            print("step: {} / episode: {} / reward1: {:.2f} / loss1: {:.4f} / reward2: {:.2f} \
-                  / loss2: {:.4f} / epsilon: {:.3f}".format(step, episode, np.mean(rewards1), 
-                  np.mean(losses1), np.mean(rewards2), np.mean(losses2), agent.epsilon))
+            print("step: {} / episode: {} / epsilon: {:.3f}".format(step, episode, agent.epsilon))
+            print("reward1: {:.2f} / loss1: {:.4f} / reward2: {:.2f} / loss2: {:.4f}".format(
+                  np.mean(rewards1), np.mean(losses1), np.mean(rewards2), np.mean(losses2)))
+            print('------------------------------------------------------------')
             
             agent.Write_Summray(np.mean(rewards1), np.mean(losses1), 
                                 np.mean(rewards2), np.mean(losses2), episode)
