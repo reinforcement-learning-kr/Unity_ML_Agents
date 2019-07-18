@@ -3,7 +3,6 @@ import random
 import datetime
 import time
 import tensorflow as tf
-import tensorflow.layers as layer
 from collections import deque
 from mlagents.envs import UnityEnvironment
 
@@ -38,11 +37,13 @@ date_time = str(datetime.date.today()) + '_' + \
             str(datetime.datetime.now().second)
 
 env_worker_id = 0
-env_name = "../envs/SokobanCurriculum_Windows/SokobanCurriculum" # Window OS
-# env_name = "../envs/SokobanCurriculum_Linux/SokobanCurriculum" # Linux OS
 
-save_path = "saved_models/" + date_time + "_dddqn"
-load_path = "./saved_models/2019-02-18_17_39_4_dddqn/model/"
+# 유니티 환경 경로 
+game = "Sokoban_Curriculum"
+env_name = "../env/" + game + "/Windows/" + game
+
+save_path = "../saved_models/" + game + "/" + date_time + "_dddqn"
+load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_dddqn/model/model"
 
 # 소코반 커리큘럼 환경의 레벨 별 리셋 파라미터 설정
 sokoban_reset_parameters = \
@@ -76,27 +77,27 @@ class DDDQN_Model():
         self.input_normalize = (self.input - (255.0 / 2)) / (255.0 / 2)
 
         with tf.variable_scope(name_or_scope=model_name):
-            self.conv1 = layer.conv2d(inputs=self.input_normalize, filters=32,
+            self.conv1 = tf.layers.conv2d(inputs=self.input_normalize, filters=32,
                                       activation=tf.nn.relu, kernel_size=[8, 8],
                                       strides=[4, 4], padding="SAME")
-            self.conv2 = layer.conv2d(inputs=self.conv1, filters=64,
+            self.conv2 = tf.layers.conv2d(inputs=self.conv1, filters=64,
                                       activation=tf.nn.relu, kernel_size=[4, 4],
                                       strides=[2, 2], padding="SAME")
-            self.conv3 = layer.conv2d(inputs=self.conv2, filters=64,
+            self.conv3 = tf.layers.conv2d(inputs=self.conv2, filters=64,
                                       activation=tf.nn.relu, kernel_size=[3, 3],
                                       strides=[1, 1], padding="SAME")
 
-            self.flat = layer.flatten(self.conv3)
+            self.flat = tf.layers.flatten(self.conv3)
 
             ####################################### Dueling DQN 부분 #######################################
-            self.L1 = layer.dense(self.flat, hidden_layer_size, activation=tf.nn.relu)
+            self.fc1 = tf.layers.dense(self.flat, hidden_layer_size, activation=tf.nn.relu)
 
-            self.A1 = layer.dense(self.L1, hidden_layer_size, activation=tf.nn.relu)
-            self.Advantage = layer.dense(self.A1, action_size, activation=None)
+            self.A1 = tf.layers.dense(self.fc1, hidden_layer_size, activation=tf.nn.relu)
+            self.Advantage = tf.layers.dense(self.A1, action_size, activation=None)
 
             # Critic
-            self.V1 = layer.dense(self.L1, hidden_layer_size, activation=tf.nn.relu)
-            self.Value = layer.dense(self.V1, 1, activation=None)
+            self.V1 = tf.layers.dense(self.fc1, hidden_layer_size, activation=tf.nn.relu)
+            self.Value = tf.layers.dense(self.V1, 1, activation=None)
 
             self.Q_Out = self.Value + (self.Advantage - tf.reduce_mean(self.Advantage, axis=1, keep_dims=True))
             ###############################################################################################

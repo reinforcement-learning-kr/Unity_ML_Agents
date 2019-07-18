@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DronePlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 3
+    vectorObservationSize: 9
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []
@@ -24,22 +24,22 @@ MonoBehaviour:
     vectorActionSpaceType: 1
   keyContinuousPlayerActions:
   - key: 119
-    index: 2
-    value: 0.1
+    index: 0
+    value: 1
   - key: 115
-    index: 2
-    value: -0.1
+    index: 0
+    value: -1
   - key: 100
-    index: 0
-    value: 0.1
+    index: 1
+    value: 1
   - key: 97
-    index: 0
-    value: -0.1
+    index: 1
+    value: -1
   - key: 32
-    index: 1
-    value: 0.1
+    index: 2
+    value: 1
   - key: 304
-    index: 1
-    value: -0.1
+    index: 2
+    value: -1
   axisContinuousPlayerActions: []
   discretePlayerActions: []

@@ -3,60 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 
-public class DroneAgent : Agent
+namespace PA_DronePack_Free
 {
-	public GameObject goal;
-	Vector3 droneInitPos;
-	float preDist, curDist;
-
-	public override void InitializeAgent()
+	public class DroneAgent : Agent
 	{
-		droneInitPos = gameObject.transform.position;
-	}
+		public PA_DroneController dcoScript;
+		public GameObject goal;
+		Vector3 droneInitPos;
+		Quaternion droneInitRot;
+		float preDist, curDist;
 
-	public override void CollectObservations()
-	{
-		AddVectorObs((goal.transform.position - gameObject.transform.position).normalized);
-	}
-
-	public override void AgentAction(float[] vectorAction, string textAction)
-	{
-		var act0 = vectorAction[0];
-		var act1 = vectorAction[1];
-		var act2 = vectorAction[2];
-
-		Vector3 newPos = new Vector3(gameObject.transform.position[0] + act0,
-										gameObject.transform.position[1] + act1,
-										gameObject.transform.position[2] + act2);
-
-		gameObject.transform.position = newPos;
-
-		if ((goal.transform.position - gameObject.transform.position).magnitude < 0.5f)
+		public override void InitializeAgent()
 		{
-			SetReward(1);
-			Done();
+			dcoScript = GetComponent<PA_DroneController>();
+			droneInitPos = gameObject.transform.position;
+			droneInitRot = gameObject.transform.rotation;
 		}
-		else if ((goal.transform.position - gameObject.transform.position).magnitude > 6f)
+
+		public override void CollectObservations()
 		{
-			SetReward(-1);
-			Done();
+			AddVectorObs(gameObject.transform.position - goal.transform.position);
+			AddVectorObs(gameObject.GetComponent<Rigidbody>().velocity);
+			AddVectorObs(gameObject.GetComponent<Rigidbody>().angularVelocity);
 		}
-		else
+
+		public override void AgentAction(float[] vectorAction, string textAction)
 		{
-			curDist = (goal.transform.position - gameObject.transform.position).magnitude;
-			var reward = (preDist - curDist);
-			SetReward(reward);
-			preDist = curDist;
+			var act0 = Mathf.Clamp(vectorAction[0], -1f, 1f);
+			var act1 = Mathf.Clamp(vectorAction[1], -1f, 1f);
+			var act2 = Mathf.Clamp(vectorAction[2], -1f, 1f);
+
+			dcoScript.DriveInput(act0);
+			dcoScript.StrafeInput(act1);
+			dcoScript.LiftInput(act2);
+
+			if ((goal.transform.position - gameObject.transform.position).magnitude < 0.5f)
+			{
+				SetReward(1);
+				Done();
+			}
+			else if ((goal.transform.position - gameObject.transform.position).magnitude > 10f)
+			{
+				SetReward(-1);
+				Done();
+			}
+			else
+			{
+				curDist = (goal.transform.position - gameObject.transform.position).magnitude;
+				var reward = (preDist - curDist);
+				SetReward(reward);
+				preDist = curDist;
+			}
+		}
+
+		public override void AgentReset()
+		{
+			gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			gameObject.transform.position = droneInitPos;
+			gameObject.transform.rotation = droneInitRot;
+			goal.transform.position = gameObject.transform.position + new Vector3(Random.Range(-5f, 5f),
+																					Random.Range(-5f, 5f),
+																					Random.Range(-5f, 5f));
+			preDist = (goal.transform.position - gameObject.transform.position).magnitude;
 		}
 	}
-
-	public override void AgentReset()
-	{
-		gameObject.transform.position = droneInitPos;
-		goal.transform.position = gameObject.transform.position + new Vector3(Random.Range(-5f, 5f),
-																				Random.Range(-5f, 5f),
-																				Random.Range(-5f, 5f));
-		preDist = (goal.transform.position - gameObject.transform.position).magnitude;
-	}
-
 }

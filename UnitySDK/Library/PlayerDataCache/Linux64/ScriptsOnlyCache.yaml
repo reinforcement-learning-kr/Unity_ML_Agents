@@ -1,29 +1,23 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Agent1_Score
-    - Agent2_Score
     - BallScript
     - DodgeAgent
+    - DroneAcademy
     - GridAgent
     - MLAgents.InferenceBrain.NNModel
     - MLAgents.LearningBrain
     - MLAgents.PlayerBrain
-    - PongAcademy
-    - PongAgent
-    - PongGoalDetection
+    - PA_DronePack_Free.DroneAgent
+    - PA_DronePack_Free.PA_DroneAxisInput
+    PA_DroneController_Free.dll:
+    - PA_DronePack_Free.PA_DroneController
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
-    UnityEngine.UI.dll:
-    - UnityEngine.EventSystems.EventSystem
-    - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Text
     com.unity.multiplayer-hlapi.Runtime.dll:
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
-    Assets/Pong/Pong.unity:
+    Assets/Drone/Scene.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -71,27 +65,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9356}
     - Class: 114
-      Script: {instanceID: 9366}
-    - Class: 114
       Script: {instanceID: 9400}
     - Class: 114
       Script: {instanceID: 9420}
     - Class: 114
-      Script: {instanceID: 9594}
-    - Class: 114
-      Script: {instanceID: 9600}
-    - Class: 114
-      Script: {instanceID: 9606}
-    - Class: 114
-      Script: {instanceID: 9650}
-    - Class: 114
-      Script: {instanceID: 9652}
-    - Class: 114
       Script: {instanceID: 9756}
     - Class: 114
-      Script: {instanceID: 9800}
+      Script: {instanceID: 9772}
     - Class: 114
       Script: {instanceID: 9870}
+    - Class: 114
+      Script: {instanceID: 9978}
     - Class: 114
       Script: {instanceID: 10160}
     - Class: 114
@@ -101,38 +85,22 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10332}
     - Class: 114
+      Script: {instanceID: 10432}
+    - Class: 114
       Script: {instanceID: 10638}
     - Class: 114
-      Script: {instanceID: 10652}
-    - Class: 114
       Script: {instanceID: 10770}
-    - Class: 114
-      Script: {instanceID: 10960}
-    - Class: 114
-      Script: {instanceID: 11050}
-    - Class: 114
-      Script: {instanceID: 11074}
     - Class: 114
       Script: {instanceID: 11222}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
       Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 134
-      Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
     - Class: 157
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -1031,9 +999,9 @@ ScriptsOnlyBuild:
     className: NetworkStartPosition
   - hash:
       serializedVersion: 2
-      Hash: 1b1be75d3c30d4710bf29cea95e24f8e
+      Hash: ff3ca2f53c8a3bf589a09b3a2532b7ac
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
+    namespaceName: PA_DronePack_Free
     className: DroneAgent
   - hash:
       serializedVersion: 2
@@ -1409,5 +1377,5 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 24
   scenePathNames:
-  - Assets/Pong/Pong.unity
-  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Pong/Linux/Pong.x86_64
+  - Assets/Drone/Scene.unity
+  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Drone/Linux/Drone.x86_64

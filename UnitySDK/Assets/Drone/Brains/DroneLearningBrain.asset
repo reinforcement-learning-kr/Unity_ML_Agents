@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DroneLearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 3
+    vectorObservationSize: 9
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []

@@ -37,7 +37,7 @@ date_time = str(datetime.date.today()) + '_' + \
             str(datetime.datetime.now().second)
 
 game = "Drone"
-env_name = "../env/" + game + "/" + game
+env_name = "../env/" + game + "/Windows/" + game
 
 save_path = "../saved_models/" + game + "/" + date_time + "_DDPG"
 load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_DDPG/model/model"

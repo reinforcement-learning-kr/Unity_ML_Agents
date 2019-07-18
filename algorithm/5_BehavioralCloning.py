@@ -17,7 +17,7 @@ train_mode = True
 batch_size = 1024
 learning_rate = 0.001
 
-train_epochs = 10
+train_epochs = 100
 test_episode = 10
 
 print_interval = 1
