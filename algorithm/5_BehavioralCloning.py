@@ -38,8 +38,8 @@ env_name = "../env/" + game + "/Windows/" + game
 demo_path = '../UnitySDK/Assets/Demonstrations/DodgeRecording.demo'
 
 # 모델 저장 및 불러오기 경로
-save_path = "./saved_models/" + game + "/" + date_time + "_BC"
-load_path = "./saved_models/" + game + "/" + "2019-04-10_0_42_7_BC/model/model.ckpt"
+save_path = "../saved_models/" + game + "/" + date_time + "_BC"
+load_path = "../saved_models/" + game + "/" + "2019-04-10_0_42_7_BC/model/model"
 
 # Model 클래스 -> 네트워크 정의 및 Loss 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
         losses = []
         accuracies = []
-        
+
         for epoch in range(train_epochs):
             # 데이터의 연관성을 깨기 위해 셔플
             shuffle_idx = np.random.permutation(len(state))

@@ -1,355 +1,227 @@
 # 라이브러리 불러오기
 import tensorflow as tf
-import tensorflow.layers as layer
 import numpy as np
 import random
-
+import datetime
 from collections import deque
 from mlagents.envs import UnityEnvironment
 
 # DDPG를 위한 파라미터 값 세팅
+state_size = 9
+action_size = 3
+
+load_model = False
 train_mode = True
 
-mem_maxlen = 1000
-TAU = 1e-3 # Target Network hyperparameter for soft update
-LRA = 5e-4 # Actor learning rate
-LRC = 5e-4 # Critic learning rate
-
+batch_size = 128
+mem_maxlen = 50000
 discount_factor = 0.99
+actor_lr = 1e-4
+critic_lr = 5e-4
+tau = 1e-3
 
-state_size = 3
-action_size = 3
-hidden_size = 32
-batch_size = 64
+mu = 0
+theta = 1e-3
+sigma = 2e-3
 
-max_episode_step = 100
-episode_length = 100000
-noise_option = 'ou_noise' # or None
+start_train_episode = 100
+run_episode = 500
+test_episode = 100
 
-# 모델 저장 및 불러오기 경로
-save_path = ".ddpg"
-load_path = ".ddpg"
-load_model = False
+print_interval = 5
+save_interval = 100
 
-# 유니티 환경 경로
-env_name = "../envs/sucks/Drone"
-logdir = "../Summary/ddpg"
+date_time = str(datetime.date.today()) + '_' + \
+            str(datetime.datetime.now().hour) + '_' + \
+            str(datetime.datetime.now().minute) + '_' + \
+            str(datetime.datetime.now().second)
 
-print_episode_interval = 10
-save_interval = 500
+game = "Drone"
+env_name = "../env/" + game + "/" + game
 
-# OU_noise 클래스 -> ou noise 정의 및 노이즈 수치(탐색) 결정
+save_path = "../saved_models/" + game + "/" + date_time + "_DDPG"
+load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_DDPG/model/model"
+
+# OU_noise 클래스 -> ou noise 정의 및 파라미터 결정
 class OU_noise:
-    '''generate OU noise for continuous action space
-    '''
-    def __init__(self, action_size, mu=0, theta=0.1, sigma=0.2, dt=1e-2):
-        '''ou noise initializer
-        
-        Arguments:
-            action_size {int} -- size of action space
-        
-        Keyword Arguments:
-            mu {int} -- mean of action space (default: {0})
-            theta {float} -- regression speed to mean (default: {0.1})
-            sigma {float} -- variation of noise (default: {0.2})
-            dt {float} -- apply ratio of previous noise (default: {1e-2})
-        '''
-        self.action_size = action_size
-        self.mu = mu
-        self.theta = theta
-        self.sigma = sigma
-        self.dt = dt
-        self.state = np.zeros(self.action_size)
+    def __init__(self):
         self.reset()
 
     def reset(self):
-        '''initialize ou noise
-        '''
-        self.state = np.zeros(self.action_size)
+        self.X = np.ones(action_size) * mu
 
-    def noise(self):
-        '''generate noise
-        
-        Returns:
-            vector -- generate noise for action space
-        '''
-        x = self.state
-        dx = self.theta * (self.mu - x) + self.sigma * np.random.randn(1, self.action_size) * np.sqrt(self.dt)
-        self.state = x + dx
-        return self.state
+    def sample(self):
+        dx = theta * (mu - self.X) + sigma * np.random.randn(len(self.X))
+        self.X += dx
+        return self.X
 
-# ActorModel 클래스 -> DDPG Agent가 Action을 결정하는 네트워크
-class ActorModel:
-    '''Actor network description class
-    '''
-    def __init__(self, state_size, action_size, name, hidden_size):
-        '''Actor network initializer
-        
-        Arguments:
-            state_size {vector or int} -- discription of state size : image or vector
-            action_size {int} -- action vector size
-            name {str} -- network namespace
-            hidden_size {int} -- hidden neuron size for network
-        '''
-        self.state_size = state_size
-        self.action_size = action_size
-
-        self.name = name
-
+# Actor 클래스 -> Actor 클래스를 통해 action을 출력
+class Actor:
+    def __init__(self, name):
         with tf.variable_scope(name):
-            self.observation = tf.placeholder(
-                tf.float32, shape=[None, self.state_size], name="actor_observation")
-            self.L1 = layer.dense(
-                self.observation, hidden_size, activation=tf.nn.leaky_relu)
-            self.L1 = tf.contrib.layers.batch_norm(self.L1, 
-                                      center=True, scale=True, 
-                                      is_training=train_mode)
-            self.L2 = layer.dense(
-                self.L1, hidden_size, activation=tf.nn.leaky_relu)
-            self.action = layer.dense(
-                self.L2, self.action_size, activation=tf.nn.tanh, name='actor_decide') * 0.1
-        
-        self.trainable_var = tf.get_collection(
-            tf.GraphKeys.TRAINABLE_VARIABLES, self.name)
+            self.state = tf.placeholder(tf.float32, [None, state_size])
+            self.fc1 = tf.layers.dense(self.state, 128, activation=tf.nn.relu)
+            self.fc2 = tf.layers.dense(self.fc1, 128, activation=tf.nn.relu)
+            self.action = tf.layers.dense(self.fc2, action_size, activation=tf.nn.tanh)
 
-    # Actor모델 학습 함수 -> Policy Gradient
-    def trainer(self, critic, batch_size):
-        '''calculate gradient for action network
-        
-        Arguments:
-            critic {tf network} -- critic network
-            batch_size {int} -- batch size
-        '''
+        self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, name)
 
-        self.action_Grad = tf.gradients(critic.value, critic.action)
-        self.policy_Grads = tf.gradients(
-            ys=self.action, xs=self.trainable_var, grad_ys=self.action_Grad)
-        
-        for idx, grads in enumerate(self.policy_Grads):
-            self.policy_Grads[idx] = -grads/batch_size
-        
-        self.Adam = tf.train.AdamOptimizer(LRA)
-        self.Update = self.Adam.apply_gradients(
-            zip(self.policy_Grads, self.trainable_var))
-
-# CriticModel 클래스 -> state와 action에 대한 value를 결정
-class CriticModel:
-    '''Critic Network class
-    '''
-    def __init__(self, state_size, action_size, name, hidden_size):
-        '''critic network initalizer
-        
-        Arguments:
-            state_size {int or vector} -- state space : image or vector
-            action_size {int} -- action vector space
-            name {str} -- network name
-            hidden_size {int} -- hidden neurons for ciritic network
-        '''
-        self.state_size = state_size
-        self.action_size = action_size
-
-        self.name = name
-        
+# Critic 클래스 -> Critic 클래스를 통해 state와 action에 대한 Q-value를 출력
+class Critic:
+    def __init__(self, name):
         with tf.variable_scope(name):
-            self.observation = tf.placeholder(
-                tf.float32, shape=[None, self.state_size], name="critic_observation")
-            self.O1 = layer.dense(
-                self.observation, hidden_size, activation=tf.nn.leaky_relu)
-            self.action = tf.placeholder(
-                tf.float32, shape=[None, self.action_size], name="critic_action")
-            self.L1 = tf.concat([self.O1, self.action], axis=-1)
-            self.L1 = layer.dense(
-                self.L1, hidden_size, activation=tf.nn.leaky_relu)
-            self.L1 = tf.contrib.layers.batch_norm(self.L1, 
-                                      center=True, scale=True, 
-                                      is_training=train_mode)
-            self.L2 = layer.dense(
-                self.L1, hidden_size, activation=tf.nn.leaky_relu)
-            self.value = layer.dense(self.L2, 1, activation=None)
-        
-        # Mean square error를 대신하는 Huber Loss를 사용하여 value gradient 계산
-        self.true_value = tf.placeholder(tf.float32, name='true_value')
-        self.loss = tf.losses.huber_loss(self.true_value, self.value)
-        self.Update = tf.train.AdamOptimizer(LRC).minimize(self.loss)
+            self.state = tf.placeholder(tf.float32, [None, state_size])
+            self.fc1 = tf.layers.dense(self.state, 128, activation=tf.nn.relu)
+            self.action = tf.placeholder(tf.float32, [None, action_size])
+            self.concat = tf.concat([self.fc1, self.action],axis=-1)
+            self.fc2 = tf.layers.dense(self.concat, 128, activation=tf.nn.relu)
+            self.fc3 = tf.layers.dense(self.fc2, 128, activation=tf.nn.relu)
+            self.predict_q = tf.layers.dense(self.fc3, 1, activation=None)
 
-        self.trainable_var = tf.get_collection(
-            tf.GraphKeys.TRAINABLE_VARIABLES, self.name)
-
-# DDPGAgnet class는 Actor-Critic을 기반으로 Continous space 환경에 대해 학습하는 클래스
+        self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, name)
+    
+# DDPGAgnet 클래스 -> Actor-Critic을 기반으로 학습하는 에이전트 클래스
 class DDPGAgent:
-    def __init__(self, state_size, action_size, hidden_size,
-            batch_size, mem_maxlen
-        ):
-        # soft target update를 위한 각 모델에 대해 2개 network 선언
-        self.actor_model = ActorModel(state_size, action_size, 'actor', hidden_size)
-        self.critic_model = CriticModel(state_size, action_size, 'critic', hidden_size)
+    def __init__(self):
+        self.actor = Actor("actor")
+        self.critic = Critic("critic")
+        self.target_actor = Actor("target_actor")
+        self.target_critic = Critic("target_critic")
+        
+        self.target_q = tf.placeholder(tf.float32, [None, 1])
+        critic_loss = tf.losses.mean_squared_error(self.target_q, self.critic.predict_q)
+        self.train_critic = tf.train.AdamOptimizer(critic_lr).minimize(critic_loss)
 
-        self.t_actor_model = ActorModel(state_size, action_size, 't_actor', hidden_size)
-        self.t_critic_model = CriticModel(state_size, action_size, 't_critic', hidden_size)
+        action_grad = tf.gradients(tf.squeeze(self.critic.predict_q), self.critic.action)
+        policy_grad = tf.gradients(self.actor.action, self.actor.trainable_var, action_grad)
+        for idx, grads in enumerate(policy_grad):
+            policy_grad[idx] = -grads/batch_size
+        self.train_actor = tf.train.AdamOptimizer(actor_lr).apply_gradients(
+                                                            zip(policy_grad, self.actor.trainable_var))
 
-        self.actor_model.trainer(self.critic_model, batch_size)
-
-        self.noise_option = noise_option
-        if noise_option is None:
-            self.noiser = None
-        elif noise_option == 'ou_noise':
-            self.noiser = OU_noise(action_size)
-
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
+        self.Saver = tf.train.Saver()
+        self.Summary, self.Merge = self.Make_Summary()
+        self.OU = OU_noise()
         self.memory = deque(maxlen=mem_maxlen)
 
-        self.batch_size = batch_size
-    
-        self.sess = tf.Session()
-        self.init = tf.global_variables_initializer()
-        self.sess.run(self.init)
-
-        self.load_model = load_model
-        self.Saver = tf.train.Saver()
-        self.save_path = save_path
-        self.load_path = load_path
-        self.Summary, self.Merge = self.make_Summary()
-
-        if self.load_model == True:
-            ckpt = tf.train.get_checkpoint_state(self.save_path)
-            self.Saver.restore(self.sess, ckpt.model_checkpoint_path)
-
-        self.act_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='actor')
-        self.t_act_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='t_actor')
-
-        self.actor_soft_update = [tf.assign(target, (1-TAU) * target + TAU * origin) 
-            for target, origin in zip(self.t_act_params, self.act_params)]
-
-        self.cri_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='critic')
-        self.t_cri_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='t_critic')
-
-        self.critic_soft_update = [tf.assign(target, (1-TAU) * target + TAU * origin) 
-            for target, origin in zip(self.t_cri_params, self.cri_params)]
+        self.soft_update_target = []
+        for idx in range(len(self.actor.trainable_var)):
+            self.soft_update_target.append(self.target_actor.trainable_var[idx].assign(
+                ((1 - tau) * self.target_actor.trainable_var[idx].value())
+                             + (tau * self.actor.trainable_var[idx].value())))
+        for idx in range(len(self.critic.trainable_var)):
+            self.soft_update_target.append(self.target_critic.trainable_var[idx].assign(
+                ((1 - tau) * self.target_critic.trainable_var[idx].value())
+                            + (tau * self.critic.trainable_var[idx].value())))
         
-    # Actor model에서 action을 예측하고, noise 추가 유무 설정
-    def get_action(self, state, train_mode=True):
-        action = self.sess.run(self.actor_model.action, feed_dict={self.actor_model.observation: state})
+        init_update_target = []
+        for idx in range(len(self.actor.trainable_var)):
+            init_update_target.append(self.target_actor.trainable_var[idx].assign(self.actor.trainable_var[idx]))
+        for idx in range(len(self.critic.trainable_var)):
+            init_update_target.append(self.target_critic.trainable_var[idx].assign(self.critic.trainable_var[idx]))
+        self.sess.run(init_update_target)
 
-        if train_mode and noise_option=='ou_noise':
-            return action + self.noiser.noise()
-        else:
-            return action
+        if load_model == True:
+            self.Saver.restore(self.sess, load_path)
+
+    # Actor model에서 action을 예측하고 noise 설정
+    def get_action(self, state):
+        action = self.sess.run(self.actor.action, feed_dict={self.actor.state: state})
+        noise = self.OU.sample()
+        return action + noise if train_mode else action
 
     # replay memory에 입력
     def append_sample(self, state, action, reward, next_state, done):
-        self.memory.append((state[0], action[0], reward[0], next_state[0], done[0]))
+        self.memory.append((state, action, reward, next_state, done))
 
     # model 저장
     def save_model(self):
-        self.Saver.save(self.sess, self.save_path+'\model.ckpt')
+        self.Saver.save(self.sess, save_path + "/model/model")
     
     # replay memory를 통해 모델을 학습
     def train_model(self):
-        mini_batch = random.sample(self.memory, self.batch_size)
-        states = np.asarray([e[0] for e in mini_batch]) + 1e-6
-        actions = np.asarray([e[1] for e in mini_batch])
-        rewards = np.asarray([e[2] for e in mini_batch])
-        next_states = np.asarray([e[3] for e in mini_batch]) + 1e-6
-        dones = np.asarray([e[4] for e in mini_batch])
-        
-        target_critic_action_inputs = self.sess.run(self.t_actor_model.action, 
-            feed_dict={self.t_actor_model.observation: next_states})
-        target_values = self.sess.run(self.t_critic_model.value, 
-            feed_dict={self.t_critic_model.observation: next_states, self.t_critic_model.action: target_critic_action_inputs})
+        mini_batch = random.sample(self.memory, batch_size)
+        states = np.asarray([sample[0] for sample in mini_batch])
+        actions = np.asarray([sample[1] for sample in mini_batch])
+        rewards = np.asarray([sample[2] for sample in mini_batch])
+        next_states = np.asarray([sample[3] for sample in mini_batch])
+        dones = np.asarray([sample[4] for sample in mini_batch])
 
-        Q_targets = rewards + discount_factor * target_values * (1-dones)
+        target_actor_actions = self.sess.run(self.target_actor.action,
+                                            feed_dict={self.target_actor.state: next_states})
+        target_critic_predict_qs = self.sess.run(self.target_critic.predict_q,
+                                                feed_dict={self.target_critic.state: next_states,
+                                                self.target_critic.action: target_actor_actions})
+        target_qs = np.asarray([reward + discount_factor * (1 - done) * target_critic_predict_q
+                                for reward, target_critic_predict_q, done in zip(
+                                                        rewards, target_critic_predict_qs, dones)])
+        self.sess.run(self.train_critic, feed_dict={self.critic.state: states,
+                                                    self.critic.action: actions,
+                                                    self.target_q: target_qs})
 
-        loss_val = self.sess.run(self.critic_model.loss, 
-            feed_dict={self.critic_model.observation: states, self.critic_model.action: actions, self.critic_model.true_value: Q_targets}
-        )
-        
-        # critic model soft update
-        self.sess.run(self.critic_model.Update, 
-            feed_dict={self.critic_model.observation: states, self.critic_model.action: actions, self.critic_model.true_value: Q_targets}
-        )
-        '''
-        self.cri_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='critic')
-        self.t_cri_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='t_critic')
+        actions_for_train = self.sess.run(self.actor.action, feed_dict={self.actor.state: states})
+        self.sess.run(self.train_actor, feed_dict={self.actor.state: states,
+                                                   self.critic.state: states,
+                                                   self.critic.action: actions_for_train})
+                                                   
+        self.sess.run(self.soft_update_target)
 
-        critic_soft_update = [tf.assign(target, (1-TAU) * target + TAU * origin) 
-            for target, origin in zip(self.t_cri_params, self.cri_params)]
-        '''
-        self.sess.run(self.critic_soft_update)
-
-        # actor model soft update
-        action_for_train = self.sess.run(self.actor_model.action, feed_dict={
-                                            self.actor_model.observation: states})
-        self.sess.run([self.actor_model.Update, self.actor_model.policy_Grads], feed_dict={
-                                   self.actor_model.observation: states, self.critic_model.observation: states, self.critic_model.action: action_for_train})
-        '''
-        self.act_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='actor')
-        self.t_act_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='t_actor')
-
-        actor_soft_update = [tf.assign(target, (1-TAU) * target + TAU * origin) 
-            for target, origin in zip(self.t_act_params, self.act_params)]
-        '''
-        self.sess.run(self.actor_soft_update)
-        
-        return loss_val
-
-    def make_Summary(self):
-        self.summary_loss = tf.placeholder(dtype=tf.float32)
-        self.summary_reward = tf.placeholder(dtype=tf.float32)
-        tf.summary.scalar("loss", self.summary_loss)
+    def Make_Summary(self):
+        self.summary_reward = tf.placeholder(tf.float32)
+        self.summary_success_cnt = tf.placeholder(tf.float32)
         tf.summary.scalar("reward", self.summary_reward)
-        return tf.summary.FileWriter(logdir=logdir, graph=self.sess.graph), tf.summary.merge_all()
-        
-    def Write_Summray(self, reward, loss, episode):
-        self.Summary.add_summary(self.sess.run(self.Merge, feed_dict={
-                                 self.summary_loss: loss, self.summary_reward: reward}), episode)
+        tf.summary.scalar("success_cnt", self.summary_success_cnt)
+        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
 
-# Main 함수 -> DDQN 에이전트를 드론 환경에서 학습
+        
+    def Write_Summray(self, reward, success_cnt, episode):
+        self.Summary.add_summary(self.sess.run(self.Merge, feed_dict={
+                                    self.summary_reward: reward, self.summary_success_cnt: success_cnt}), episode)
+
+# Main 함수 -> DDPG 에이전트를 드론 환경에서 학습
 if __name__ == '__main__':
     # 유니티 환경 설정
     env = UnityEnvironment(file_name=env_name)
     default_brain = env.brain_names[0]
-
     # DDPGAgnet 선언
-    agent = DDPGAgent(state_size, action_size, hidden_size, 
-        batch_size, mem_maxlen)
-
-    losses = deque(maxlen=20)
-    frame_count = 0
+    agent = DDPGAgent()
+    rewards = deque(maxlen=print_interval)
+    success_cnt = 0
 
     # 각 에피소드를 거치며 replay memory에 저장
-    for episode in range(episode_length):
-        episode_rewards = []
-        env_info = env.reset(train_mode=train_mode)[default_brain]
+    for episode in range(run_episode + test_episode):
+        if episode == run_episode:
+            train_mode = False
 
-        state = env_info.vector_observations
-        
-        for _ in range(max_episode_step):
-            frame_count += 1
-            action = agent.get_action(state, train_mode)
-            action = action
+        env_info = env.reset(train_mode=train_mode)[default_brain]
+        state = env_info.vector_observations[0]
+        episode_rewards = 0
+        done = False
+        while not done:
+            action = agent.get_action([state])[0]
             env_info = env.step(action)[default_brain]
-            next_state = env_info.vector_observations
-            temp_reward = env_info.rewards
-            
-            reward = temp_reward
-            done = env_info.local_done
-            episode_rewards.append(reward[0])
+            next_state = env_info.vector_observations[0]
+            reward = env_info.rewards[0]
+            done = env_info.local_done[0]
+            episode_rewards += reward
             if train_mode:
                 agent.append_sample(state, action, reward, next_state, done)
             state = next_state
 
-            if done[0]:
-                break
-        
-        # 일정 이상 memory가 쌓이면 학습
-        if train_mode and len(agent.memory) > agent.batch_size:
-            loss = agent.train_model()
-            losses.append(loss)
+            # train_mode 이고 일정 이상 에피소드가 지나면 학습
+            if episode > start_train_episode and train_mode :
+                agent.train_model()
+        success_cnt = success_cnt + 1 if reward == 1 else success_cnt
+        rewards.append(episode_rewards)
 
         # 일정 이상의 episode를 진행 시 log 출력
-        if episode % print_episode_interval == 0:
-            print(f"episode({episode}) - reward: {np.mean(episode_rewards):.2f} loss: {np.mean(losses):.4f} mem_len {len(agent.memory)}")
-            agent.Write_Summray(np.mean(episode_rewards), np.mean(losses), episode)
-        
+        if episode % print_interval == 0 and episode != 0:
+            print(f"episode({episode}) - reward: {np.mean(rewards):.3f} success_cnt: {success_cnt} mem_len: {len(agent.memory)}  ") 
+            agent.Write_Summray(np.mean(rewards), success_cnt, episode)
+            success_cnt = 0
+
         # 일정 이상의 episode를 진행 시 현재 모델 저장
         if train_mode and episode % save_interval == 0 and episode != 0:
             print("model saved")
