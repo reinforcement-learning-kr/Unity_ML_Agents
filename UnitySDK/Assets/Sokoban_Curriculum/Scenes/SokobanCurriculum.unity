@@ -152,7 +152,8 @@ MonoBehaviour:
   broadcastHub:
     broadcastingBrains:
     - {fileID: 11400000, guid: b18c48e0fc5ac9d49a5d1290dce02b53, type: 2}
-    _brainsToControl: []
+    _brainsToControl:
+    - {fileID: 11400000, guid: b18c48e0fc5ac9d49a5d1290dce02b53, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -174,6 +175,8 @@ MonoBehaviour:
       value: 1
     - key: numGoals
       value: 2
+    - key: numBoxes
+      value: 1
   actorObjs: []
   players: 
   trueAgent: {fileID: 2008405822}
