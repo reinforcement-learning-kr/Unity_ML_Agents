@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DodgePlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 360
+    vectorObservationSize: 30
     numStackedVectorObservations: 2
     vectorActionSize: 05000000
     cameraResolutions: []

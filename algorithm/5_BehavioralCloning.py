@@ -8,38 +8,35 @@ from mlagents.envs import UnityEnvironment
 from mlagents.trainers.demo_loader import demo_to_buffer
 
 # Behavioral Cloning 학습 및 시험 파라미터 값 세팅
-state_size = 360 * 2
+state_size = 30 * 2
 action_size = 5
 
-load_model = False
-train_mode = True
+load_model = True
+train_mode = False
 
 batch_size = 1024
 learning_rate = 0.001
 
-train_epochs = 100
+train_epochs = 1000
 test_episode = 10
 
 print_interval = 1
 
-# 닷지 환경 설정 (공 속도 = 1, 공 갯수 = 10, 공 유도 랜덤 수준 = 0.5 공 생성 랜덤 시드 = 77, 에이전트 속도 = 30)
-env_config = {"ballSpeed": 1, "ballNum": 10, "ballRandom": 0.5, "randomSeed": 77, "agentSpeed": 30}
+# 닷지 환경 설정 (공 속도 = 2, 공 갯수 = 15, 공 유도 랜덤 수준 = 0.2 공 생성 랜덤 시드 = 77, 에이전트 속도 = 30)
+env_config = {"ballSpeed": 2, "ballNum": 15, "ballRandom": 0.2, "randomSeed": 77, "agentSpeed": 30}
 
-date_time = str(datetime.date.today()) + '_' + \
-            str(datetime.datetime.now().hour) + '_' + \
-            str(datetime.datetime.now().minute) + '_' + \
-            str(datetime.datetime.now().second)
+date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 # 유니티 환경 경로
 game = "Dodge"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 전문가 실행 데이터 경로
-demo_path = '../UnitySDK/Assets/Demonstrations/DodgeRecording.demo'
+demo_path = '../UnitySDK/Assets/Demonstrations/DodgeRecording_2.demo'
 
 # 모델 저장 및 불러오기 경로
 save_path = "../saved_models/" + game + "/" + date_time + "_BC"
-load_path = "../saved_models/" + game + "/" + "2019-04-10_0_42_7_BC/model/model"
+load_path = "../saved_models/" + game + "/" + "20190814-02-39-38_BC/model/model"
 
 # Model 클래스 -> 네트워크 정의 및 Loss 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -68,7 +65,7 @@ class BCAgent():
         self.model = Model("BC")
 
         self.sess = tf.Session()
-        self.init = tf.global_variables_initializer()
+        self.init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
         self.sess.run(self.init)
 
         self.Saver = tf.train.Saver()
@@ -168,8 +165,9 @@ if __name__ == '__main__':
         default_brain = env.brain_names[0]
         brain = env.brains[default_brain]
 
+        env_info = env.reset(train_mode=train_mode, config=env_config)[default_brain]
+        
         for episode in range(test_episode):
-            env_info = env.reset(train_mode=train_mode, config=env_config)[default_brain]
             done = False
             episode_rewards = 0
             while not done:

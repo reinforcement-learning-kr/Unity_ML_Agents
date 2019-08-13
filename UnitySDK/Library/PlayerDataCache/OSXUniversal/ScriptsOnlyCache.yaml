@@ -2,22 +2,21 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - BallScript
+    - DodgeAcademy
     - DodgeAgent
-    - DroneAcademy
     - GridAgent
+    - MLAgents.BCTeacherHelper
+    - MLAgents.DemonstrationRecorder
     - MLAgents.InferenceBrain.NNModel
     - MLAgents.LearningBrain
     - MLAgents.PlayerBrain
-    - PA_DronePack_Free.DroneAgent
-    - PA_DronePack_Free.PA_DroneAxisInput
-    PA_DroneController_Free.dll:
-    - PA_DronePack_Free.PA_DroneController
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     com.unity.multiplayer-hlapi.Runtime.dll:
+    - UnityEngine.Networking.NetworkCallbacks
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
-    Assets/Drone/Scene.unity:
+    Assets/Dodge/Dodge.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -71,11 +70,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9756}
     - Class: 114
-      Script: {instanceID: 9772}
+      Script: {instanceID: 9850}
     - Class: 114
       Script: {instanceID: 9870}
-    - Class: 114
-      Script: {instanceID: 9978}
     - Class: 114
       Script: {instanceID: 10160}
     - Class: 114
@@ -85,11 +82,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10332}
     - Class: 114
-      Script: {instanceID: 10432}
-    - Class: 114
       Script: {instanceID: 10638}
     - Class: 114
+      Script: {instanceID: 10692}
+    - Class: 114
       Script: {instanceID: 10770}
+    - Class: 114
+      Script: {instanceID: 11096}
     - Class: 114
       Script: {instanceID: 11222}
     - Class: 115
@@ -1377,5 +1376,5 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Drone/Scene.unity
-  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Drone/Drone.app
+  - Assets/Dodge/Dodge.unity
+  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Dodge/Dodge.app

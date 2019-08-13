@@ -20,10 +20,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Sokoban/Sokoban.unity
     guid: bdfd3ded8a39d9a4fb1f83669c798fa3
-  - enabled: 0
+  - enabled: 1
     path: Assets/Dodge/Dodge.unity
     guid: 7fdebcd3f47404546bc2d1c7b2897a67
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sokoban_Curriculum/Scenes/SokobanCurriculum.unity
     guid: dff4ea4c221be424bb2bd6d769932e7d
   m_configObjects: {}

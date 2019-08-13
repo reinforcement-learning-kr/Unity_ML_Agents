@@ -18,9 +18,9 @@ batch_size = 32
 hidden_layer_size = 512
 mem_maxlen = 50000
 discount_factor = 0.9
-learning_rate = 0.00025
+learning_rate = 0.00005
 
-run_episode = 80000
+run_episode = 75000
 test_episode = 500
 
 start_train_episode = 500
@@ -30,7 +30,7 @@ print_interval = 100
 save_interval = 5000
 
 start_epsilon = 1.0
-epsilon_min = 0.01
+epsilon_min = 0.1
 
 date_time = str(datetime.date.today()) + '_' + \
             str(datetime.datetime.now().hour) + '_' + \
@@ -47,19 +47,26 @@ load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_dddqn/model/model"
 sokoban_reset_parameters = \
 [
     {"gridSize": 4, "numGoals": 3, "numBoxes": 1, "numObstacles": 1},  # Level 0
-    {"gridSize": 6, "numGoals": 4, "numBoxes": 1, "numObstacles": 1},  # Level 1
-    {"gridSize": 8, "numGoals": 6, "numBoxes": 1, "numObstacles": 1},  # Level 2
-    {"gridSize": 10, "numGoals": 7, "numBoxes": 2, "numObstacles": 1},  # Level 3
-    {"gridSize": 10, "numGoals": 6, "numBoxes": 3, "numObstacles": 1},  # Level 4
-    {"gridSize": 10, "numGoals": 5, "numBoxes": 4, "numObstacles": 1},  # Level 5
+    {"gridSize": 6, "numGoals": 3, "numBoxes": 1, "numObstacles": 1},  # Level 1
+    {"gridSize": 6, "numGoals": 3, "numBoxes": 1, "numObstacles": 2},  # Level 2
+    {"gridSize": 6, "numGoals": 2, "numBoxes": 2, "numObstacles": 2}   # Level 3
+    #{"gridSize": 6, "numGoals": 3, "numBoxes": 3, "numObstacles": 2},  # Level 4
 ]
 
 # 커리큘럼 설정
+# curriculum_config = {
+#     'game_level': [0, 1, 2, 3, 4],  # 게임의 레벨
+#     'thresholds': [0.7, 0.7, 0.7, 0.7, None],  # 각 게임 레벨 별 클리어 성공률
+#     'start_epsilon': [1.0, 0.7, 0.7, 0.7, 0.7], # 시작 앱실론 값
+#     'epsilon_decay': [0.00005, 0.00005, 0.00005, 0.00005, 0.000025],
+#     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
+# }
+
 curriculum_config = {
-    'game_level': [0, 1, 2, 3, 4, 5],  # 게임의 레벨
-    'thresholds': [0.7, 0.7, 0.7, 0.7, 0.7, None],  # 각 게임 레벨 별 클리어 성공률
-    'start_epsilon': [1.0, 0.7, 0.7, 0.7, 0.7, 0.7], # 시작 앱실론 값
-    'epsilon_decay': [0.00005, 0.00005, 0.00005, 0.00005, 0.00005, 0.00005],
+    'game_level': [0, 1, 2, 3],  # 게임의 레벨
+    'thresholds': [0.7, 0.7, 0.7, None],  # 각 게임 레벨 별 클리어 성공률
+    'start_epsilon': [1.0, 0.7, 0.7, 0.7], # 시작 앱실론 값
+    'epsilon_decay': [0.00005, 0.00005, 0.00005, 0.000025],
     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
 }
 

@@ -22,7 +22,7 @@ public class DodgeAgent : Agent {
         RaycastHit hit;
         Ray ray;
         float Angle;
-        float raycount = 360f;
+        float raycount = 30f;
         List<Vector3> debugRay = new List<Vector3>();
         for(float i =0; i < raycount; i++)
         {

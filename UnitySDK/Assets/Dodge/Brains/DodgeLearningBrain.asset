@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DodgeLearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 360
+    vectorObservationSize: 30
     numStackedVectorObservations: 2
     vectorActionSize: 05000000
     cameraResolutions: []
@@ -21,3 +21,4 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 0
   model: {fileID: 4900000, guid: 1eaeced8f67bc8b428e57ce7e72dd950, type: 3}
+  inferenceDevice: 0
