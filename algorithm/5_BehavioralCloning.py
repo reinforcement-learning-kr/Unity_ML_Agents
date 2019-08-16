@@ -79,6 +79,7 @@ class BCAgent():
     # 모델 액션 얻기
     def get_action(self, state):
         logits = self.sess.run(self.model.logits, feed_dict={self.model.inputs: state})
+        logits = np.clip(logits, -60, 60)
         policy = [np.exp(logit)/np.sum(np.exp(logits)) for logit in logits]
         action = np.random.choice(action_size,1,p=policy[0])
         return action
