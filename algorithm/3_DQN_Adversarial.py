@@ -31,10 +31,7 @@ save_interval = 5000
 epsilon_init = 1.0
 epsilon_min = 0.1
 
-date_time = str(datetime.date.today()) + '_' + \
-            str(datetime.datetime.now().hour) + '_' + \
-            str(datetime.datetime.now().minute) + '_' + \
-            str(datetime.datetime.now().second)
+date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 # 유니티 환경 경로 
 game = "Pong"
@@ -42,7 +39,7 @@ env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
 save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/2019-02-20_16_27_5_DQN/model/model"
+load_path = "../saved_models/" + game + "/20190220-16-27-5_DQN/model/model"
 
 # Model 클래스 -> 네트워크 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():

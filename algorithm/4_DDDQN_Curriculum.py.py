@@ -32,16 +32,13 @@ save_interval = 5000
 start_epsilon = 1.0
 epsilon_min = 0.1
 
-date_time = str(datetime.date.today()) + '_' + \
-            str(datetime.datetime.now().hour) + '_' + \
-            str(datetime.datetime.now().minute) + '_' + \
-            str(datetime.datetime.now().second)
+date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 game = "Sokoban_Curriculum"
 env_name = "../env/" + game + "/Windows/" + game
 
 save_path = "../saved_models/" + game + "/" + date_time + "_dddqn"
-load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_dddqn/model/model"
+load_path = "../saved_models/" + game + "/20190714-18-40-51_dddqn/model/model"
 
 # 소코반 커리큘럼 환경의 레벨 별 리셋 파라미터 설정
 sokoban_reset_parameters = \

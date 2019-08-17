@@ -31,16 +31,13 @@ test_episode = 100
 print_interval = 5
 save_interval = 100
 
-date_time = str(datetime.date.today()) + '_' + \
-            str(datetime.datetime.now().hour) + '_' + \
-            str(datetime.datetime.now().minute) + '_' + \
-            str(datetime.datetime.now().second)
+date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
 game = "Drone"
 env_name = "../env/" + game + "/Windows/" + game
 
 save_path = "../saved_models/" + game + "/" + date_time + "_DDPG"
-load_path = "../saved_models/" + game + "/2019-07-14_18_40_51_DDPG/model/model"
+load_path = "../saved_models/" + game + "/20190714-18-40-51-DDPG/model/model"
 
 # OU_noise 클래스 -> ou noise 정의 및 파라미터 결정
 class OU_noise:
