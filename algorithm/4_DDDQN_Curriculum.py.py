@@ -20,7 +20,7 @@ mem_maxlen = 50000
 discount_factor = 0.9
 learning_rate = 0.00005
 
-run_episode = 75000
+run_episode = 40000
 test_episode = 500
 
 start_train_episode = 500
@@ -43,10 +43,10 @@ load_path = "../saved_models/" + game + "/20190714-18-40-51_dddqn/model/model"
 # 소코반 커리큘럼 환경의 레벨 별 리셋 파라미터 설정
 sokoban_reset_parameters = \
 [
-    {"gridSize": 4, "numGoals": 3, "numBoxes": 1, "numObstacles": 1},  # Level 0
-    {"gridSize": 6, "numGoals": 3, "numBoxes": 1, "numObstacles": 1},  # Level 1
-    {"gridSize": 6, "numGoals": 3, "numBoxes": 1, "numObstacles": 2},  # Level 2
-    {"gridSize": 6, "numGoals": 2, "numBoxes": 2, "numObstacles": 2}   # Level 3
+    {"gridSize": 4, "numGoals": 3, "numBoxes": 1, "numObstacles": 0},  # Level 0
+    {"gridSize": 5, "numGoals": 3, "numBoxes": 1, "numObstacles": 1},  # Level 1
+    {"gridSize": 6, "numGoals": 3, "numBoxes": 2, "numObstacles": 1},  # Level 2
+    {"gridSize": 6, "numGoals": 3, "numBoxes": 3, "numObstacles": 1}   # Level 3
     #{"gridSize": 6, "numGoals": 3, "numBoxes": 3, "numObstacles": 2},  # Level 4
 ]
 
@@ -63,7 +63,7 @@ curriculum_config = {
     'game_level': [0, 1, 2, 3],  # 게임의 레벨
     'thresholds': [0.7, 0.7, 0.7, None],  # 각 게임 레벨 별 클리어 성공률
     'start_epsilon': [1.0, 0.7, 0.7, 0.7], # 시작 앱실론 값
-    'epsilon_decay': [0.00005, 0.00005, 0.00005, 0.000025],
+    'epsilon_decay': [0.0001, 0.0001, 0.00005, 0.00005],
     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
 }
 

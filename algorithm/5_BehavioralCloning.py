@@ -32,11 +32,11 @@ game = "Dodge"
 env_name = "../env/" + game + "/Windows/" + game
 
 # 전문가 실행 데이터 경로
-demo_path = '../UnitySDK/Assets/Demonstrations/DodgeRecording_2.demo'
+demo_path = '../UnitySDK/Assets/Demonstrations/DodgeRecording.demo'
 
 # 모델 저장 및 불러오기 경로
 save_path = "../saved_models/" + game + "/" + date_time + "_BC"
-load_path = "../saved_models/" + game + "/" + "20190814-02-39-38_BC/model/model"
+load_path = "../saved_models/" + game + "/" + "20190822-11-13-21_BC/model/model"
 
 # Model 클래스 -> 네트워크 정의 및 Loss 설정, 네트워크 최적화 알고리즘 결정
 class Model():
@@ -44,12 +44,17 @@ class Model():
         self.inputs = tf.placeholder(shape=[None, state_size], dtype=tf.float32)
         self.labels = tf.placeholder(shape=[None, 1], dtype=tf.int64)
         
+        self.is_train = tf.placeholder(dtype=tf.bool)
+
         with tf.variable_scope(name_or_scope=model_name):
-            # 3개의 FC layer
+            # 3개의 완전연결층
             self.fc1 = tf.layers.dense(self.inputs, 128, activation=tf.nn.relu)
+            self.fc1 = tf.layers.dropout(self.fc1, rate=0.2, training=self.is_train)
             self.fc2 = tf.layers.dense(self.fc1, 128, activation=tf.nn.relu)
+            self.fc2 = tf.layers.dropout(self.fc2, rate=0.2, training=self.is_train)
             self.fc3 = tf.layers.dense(self.fc2, 128, activation=tf.nn.relu)
-            # sparse_softmax_cross_entropy를 위한 logits 출력값
+            self.fc3 = tf.layers.dropout(self.fc3, rate=0.2, training=self.is_train)
+            # 출력층
             self.logits = tf.layers.dense(self.fc3, action_size)
 
         self.predict = tf.argmax(self.logits, axis=1)
@@ -77,9 +82,8 @@ class BCAgent():
             self.Saver.restore(self.sess, load_path)
 
     # 모델 액션 얻기
-    def get_action(self, state):
-        logits = self.sess.run(self.model.logits, feed_dict={self.model.inputs: state})
-        logits = np.clip(logits, -60, 60)
+    def get_action(self, state, reward):
+        logits = self.sess.run(self.model.logits, feed_dict={self.model.inputs: state, self.model.is_train: False})
         policy = [np.exp(logit)/np.sum(np.exp(logits)) for logit in logits]
         action = np.random.choice(action_size,1,p=policy[0])
         return action
@@ -92,7 +96,7 @@ class BCAgent():
     def train_model(self, data, labels):
         _, loss, accuracy = self.sess.run(
             [self.model.UpdateModel, self.model.loss, self.model.accuracy],
-            feed_dict={self.model.inputs: data, self.model.labels: labels})
+            feed_dict={self.model.inputs: data, self.model.labels: labels, self.model.is_train: True})
         return loss, accuracy
 
     # 텐서 보드에 기록할 값 설정 및 데이터 기록
@@ -172,7 +176,7 @@ if __name__ == '__main__':
             done = False
             episode_rewards = 0
             while not done:
-                action = agent.get_action(np.array([env_info.vector_observations[0]]))
+                action = agent.get_action(np.array([env_info.vector_observations[0]]), env_info.rewards[0])
                 env_info = env.step(action)[default_brain]
                 episode_rewards += env_info.rewards[0]
                 done = env_info.local_done[0]
