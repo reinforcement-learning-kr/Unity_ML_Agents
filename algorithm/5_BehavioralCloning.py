@@ -49,13 +49,13 @@ class Model():
         with tf.variable_scope(name_or_scope=model_name):
             # 3개의 완전연결층
             self.fc1 = tf.layers.dense(self.inputs, 128, activation=tf.nn.relu)
-            self.fc1 = tf.layers.dropout(self.fc1, rate=0.2, training=self.is_train)
-            self.fc2 = tf.layers.dense(self.fc1, 128, activation=tf.nn.relu)
-            self.fc2 = tf.layers.dropout(self.fc2, rate=0.2, training=self.is_train)
-            self.fc3 = tf.layers.dense(self.fc2, 128, activation=tf.nn.relu)
-            self.fc3 = tf.layers.dropout(self.fc3, rate=0.2, training=self.is_train)
+            self.fc_drop1 = tf.layers.dropout(self.fc1, rate=0.2, training=self.is_train)
+            self.fc2 = tf.layers.dense(self.fc_drop1, 128, activation=tf.nn.relu)
+            self.fc_drop2 = tf.layers.dropout(self.fc2, rate=0.2, training=self.is_train)
+            self.fc3 = tf.layers.dense(self.fc_drop2, 128, activation=tf.nn.relu)
+            self.fc_drop3 = tf.layers.dropout(self.fc3, rate=0.2, training=self.is_train)
             # 출력층
-            self.logits = tf.layers.dense(self.fc3, action_size)
+            self.logits = tf.layers.dense(self.fc_drop3, action_size)
 
         self.predict = tf.argmax(self.logits, axis=1)
         self.loss = tf.losses.sparse_softmax_cross_entropy(self.labels, self.logits)
@@ -81,9 +81,10 @@ class BCAgent():
         if load_model:
             self.Saver.restore(self.sess, load_path)
 
-    # 모델 액션 얻기
-    def get_action(self, state, reward):
-        logits = self.sess.run(self.model.logits, feed_dict={self.model.inputs: state, self.model.is_train: False})
+    # 행동 선택
+    def get_action(self, state):
+        logits = self.sess.run(self.model.logits, feed_dict={self.model.inputs: state, 
+                                                             self.model.is_train: False})
         policy = [np.exp(logit)/np.sum(np.exp(logits)) for logit in logits]
         action = np.random.choice(action_size,1,p=policy[0])
         return action
@@ -92,7 +93,7 @@ class BCAgent():
     def save_model(self):
         self.Saver.save(self.sess, save_path + "/model/model")
 
-    # 학습 수행 전문가 데이터를 가지고 지도학습 실행
+    # 학습 수행 전문가 데이터를 이용하여 지도학습 수행
     def train_model(self, data, labels):
         _, loss, accuracy = self.sess.run(
             [self.model.UpdateModel, self.model.loss, self.model.accuracy],
@@ -109,7 +110,8 @@ class BCAgent():
 
     def Write_Summray(self, loss, accuracy, epoch):
         self.Summary.add_summary(
-            self.sess.run(self.Merge, feed_dict={self.summary_loss: loss, self.summary_accuracy: accuracy}), epoch)
+            self.sess.run(self.Merge, feed_dict={self.summary_loss: loss, 
+                                                 self.summary_accuracy: accuracy}), epoch)
 
     # 전문가 실행 데이터 불러오기
     def load_demo(self):
@@ -123,7 +125,7 @@ if __name__ == '__main__':
     agent = BCAgent()
 
     # 학습 모드
-    if train_mode :
+    if train_mode:
         # 전문가 데이터 버퍼로 가져오기
         buffer = agent.load_demo()
 
@@ -158,13 +160,15 @@ if __name__ == '__main__':
             
             # 게임 진행 상황 출력 및 텐서 보드에 loss, accuracy값 기록
             if epoch % print_interval == 0 and epoch != 0:
-                print(f"epoch({epoch}) - loss: {np.mean(losses):.4f} accuracy: {np.mean(accuracies):.4f}")
+                print("epoch({}) - loss: {:.4f} / accuracy: {:.4f}".format(
+                       epoch, np.mean(losses), np.mean(accuracies)))
                 agent.Write_Summray(np.mean(losses), np.mean(accuracies), epoch)
                 losses = []
                 accuracies = []
 
         # 네트워크 모델 저장
         agent.save_model()
+
     else:
         env = UnityEnvironment(file_name=env_name)
         default_brain = env.brain_names[0]
@@ -175,8 +179,9 @@ if __name__ == '__main__':
         for episode in range(test_episode):
             done = False
             episode_rewards = 0
+
             while not done:
-                action = agent.get_action(np.array([env_info.vector_observations[0]]), env_info.rewards[0])
+                action = agent.get_action(np.array([env_info.vector_observations[0]]))
                 env_info = env.step(action)[default_brain]
                 episode_rewards += env_info.rewards[0]
                 done = env_info.local_done[0]

@@ -156,8 +156,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b18c48e0fc5ac9d49a5d1290dce02b53, type: 2}
   maxSteps: 0
   trainingConfiguration:
-    width: 80
-    height: 80
+    width: 640
+    height: 360
     qualityLevel: 1
     timeScale: 100
     targetFrameRate: -1
@@ -1275,7 +1275,7 @@ MonoBehaviour:
     agentCameras:
     - {fileID: 489340228}
     agentRenderTextures: []
-    maxStep: 800
+    maxStep: 500
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
