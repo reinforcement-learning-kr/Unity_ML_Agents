@@ -17,11 +17,11 @@ train_mode = True
 batch_size = 32
 hidden_layer_size = 512
 mem_maxlen = 50000
-discount_factor = 0.95
+discount_factor = 0.9
 learning_rate = 0.00005
 
 run_episode = 30000
-test_episode = 500
+test_episode = 200
 
 start_train_episode = 500
 
@@ -30,7 +30,7 @@ print_interval = 100
 save_interval = 5000
 
 start_epsilon = 1.0
-epsilon_min = 0.05
+epsilon_min = 0.1
 
 date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 
@@ -135,7 +135,7 @@ class DDDQNAgent():
 
     # 엡실론 값에 따라 행동을 선택하는 함수
     def get_action(self, state, train_mode=True):
-        if train_mode and self.epsilon > np.random.rand():
+        if self.epsilon > np.random.rand():
             return np.random.randint(0, action_size)
         else:
             predict = self.sess.run(self.model.predict, feed_dict={self.model.input: state})
@@ -277,7 +277,8 @@ if __name__ == '__main__':
             if train_mode:
                 agent.append_sample(state, action, reward, next_state, done)
             else:
-                time.sleep(0.05)
+                time.sleep(0.2)
+                agent.epsilon = 0.05
 
             state = next_state
 

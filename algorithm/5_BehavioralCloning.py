@@ -11,8 +11,8 @@ from mlagents.trainers.demo_loader import demo_to_buffer
 state_size = 30 * 2
 action_size = 5
 
-load_model = True
-train_mode = False
+load_model = False
+train_mode = True
 
 batch_size = 1024
 learning_rate = 0.001
