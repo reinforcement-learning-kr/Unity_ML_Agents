@@ -20,8 +20,8 @@ mem_maxlen = 50000
 discount_factor = 0.9
 learning_rate = 0.00005
 
-run_episode = 30000
-test_episode = 200
+run_episode = 35000
+test_episode = 300
 
 start_train_episode = 500
 
@@ -37,8 +37,10 @@ date_time = datetime.datetime.now().strftime("%Y%m%d-%H-%M-%S")
 game = "Sokoban_Curriculum"
 env_name = "../env/" + game + "/Windows/" + game
 
+curriculum_num = 0
+
 save_path = "../saved_models/" + game + "/" + date_time + "_dddqn"
-load_path = "../saved_models/" + game + "/20190714-18-40-51_dddqn/model/model"
+load_path = "../saved_models/" + game + "/20190829-16-27-30_dddqn/Level_Up_3/model"
 
 # 소코반 커리큘럼 환경의 레벨 별 리셋 파라미터 설정
 sokoban_reset_parameters = \
@@ -46,24 +48,15 @@ sokoban_reset_parameters = \
     {"gridSize": 3, "numGoals": 1, "numBoxes": 1, "numObstacles": 0},  # Level 0
     {"gridSize": 4, "numGoals": 2, "numBoxes": 1, "numObstacles": 0},  # Level 1
     {"gridSize": 5, "numGoals": 3, "numBoxes": 2, "numObstacles": 0},  # Level 2
-    {"gridSize": 5, "numGoals": 3, "numBoxes": 2, "numObstacles": 1}   # Level 3
-    #{"gridSize": 6, "numGoals": 3, "numBoxes": 3, "numObstacles": 2},  # Level 4
+    {"gridSize": 6, "numGoals": 3, "numBoxes": 2, "numObstacles": 1}   # Level 3
 ]
 
 # 커리큘럼 설정
-# curriculum_config = {
-#     'game_level': [0, 1, 2, 3, 4],  # 게임의 레벨
-#     'thresholds': [0.7, 0.7, 0.7, 0.7, None],  # 각 게임 레벨 별 클리어 성공률
-#     'start_epsilon': [1.0, 0.7, 0.7, 0.7, 0.7], # 시작 앱실론 값
-#     'epsilon_decay': [0.00005, 0.00005, 0.00005, 0.00005, 0.000025],
-#     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
-# }
-
 curriculum_config = {
     'game_level': [0, 1, 2, 3],  # 게임의 레벨
     'thresholds': [0.75, 0.75, 0.75, None],  # 각 게임 레벨 별 클리어 성공률
     'start_epsilon': [1.0, 0.7, 0.7, 0.7], # 시작 앱실론 값
-    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00005],
+    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00003],
     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
 }
 
@@ -227,7 +220,6 @@ if __name__ == '__main__':
     brain = env.brains[default_brain]
 
     # 커리큘럼 초기화
-    curriculum_num = 0
     min_lesson_length = curriculum_config['min_lesson_length']
     game_level = curriculum_config['game_level'][curriculum_num]
     threshold = curriculum_config['thresholds'][curriculum_num]
@@ -277,8 +269,8 @@ if __name__ == '__main__':
             if train_mode:
                 agent.append_sample(state, action, reward, next_state, done)
             else:
-                time.sleep(0.2)
-                agent.epsilon = 0.05
+                time.sleep(0.15)
+                agent.epsilon = 0.1
 
             state = next_state
 

@@ -156,8 +156,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b18c48e0fc5ac9d49a5d1290dce02b53, type: 2}
   maxSteps: 0
   trainingConfiguration:
-    width: 640
-    height: 360
+    width: 80
+    height: 80
     qualityLevel: 1
     timeScale: 100
     targetFrameRate: -1
@@ -181,7 +181,7 @@ MonoBehaviour:
   players: 
   trueAgent: {fileID: 2008405822}
   gridSize: 0
-  camObject: {fileID: 489340223}
+  camObject: {fileID: 231883441}
   agentPref: {fileID: 1657514749044530, guid: 4aaf3eba3cec1514aaf02961a25dfdb5, type: 3}
   boxPref: {fileID: 7680640176547182271, guid: 0db3a42b03968fe4ca0a6773244630c1, type: 3}
   goalPref: {fileID: 1508142483324970, guid: 2144757793c3fd24da0b8e969d96a341, type: 3}
@@ -1275,7 +1275,7 @@ MonoBehaviour:
     agentCameras:
     - {fileID: 489340228}
     agentRenderTextures: []
-    maxStep: 500
+    maxStep: 200
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1

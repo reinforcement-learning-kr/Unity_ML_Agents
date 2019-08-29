@@ -42,7 +42,7 @@ env_name = "../env/" + game + "/Windows/" + game
 
 # 모델 저장 및 불러오기 경로
 save_path = "../saved_models/" + game + "/" + date_time + "_DQN"
-load_path = "../saved_models/" + game + "/20190817-00-44-25_DQN/model/model"
+load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
 
 # Model 클래스 -> 함성곱 신경망 정의 및 손실함수 설정, 네트워크 최적화 알고리즘 결정
 class Model():
