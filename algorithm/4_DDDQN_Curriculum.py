@@ -20,7 +20,7 @@ mem_maxlen = 50000
 discount_factor = 0.9
 learning_rate = 0.00005
 
-run_episode = 35000
+run_episode = 30000
 test_episode = 300
 
 start_train_episode = 500
@@ -56,7 +56,7 @@ curriculum_config = {
     'game_level': [0, 1, 2, 3],  # 게임의 레벨
     'thresholds': [0.75, 0.75, 0.75, None],  # 각 게임 레벨 별 클리어 성공률
     'start_epsilon': [1.0, 0.7, 0.7, 0.7], # 시작 앱실론 값
-    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00003],
+    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00005],
     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
 }
 
@@ -102,7 +102,7 @@ class DDDQN_Model():
         self.trainable_var = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, model_name)
 
 # DDDQN 에이전트
-class DDDQNAgent():
+class DDDQN_Agent():
     def __init__(self):
         # 타겟 네트워크와 일반 네트워크 생성
         self.model = DDDQN_Model(model_name="Q")
@@ -231,7 +231,7 @@ if __name__ == '__main__':
                          config=sokoban_reset_parameters[game_level])[default_brain]
 
     # DDDQN 에이전트 생성
-    agent = DDDQNAgent()
+    agent = DDDQN_Agent()
 
     step = 0
     start_level_episode = 0

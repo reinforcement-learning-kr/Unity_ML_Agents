@@ -103,7 +103,7 @@ class DQNAgent():
 
     # Epsilon greedy 기법에 따라 행동 결정
     def get_action(self, state, train_mode=True):
-        if train_mode == True and self.epsilon > np.random.rand():
+        if self.epsilon > np.random.rand():
             # 랜덤하게 행동 결정
             return np.random.randint(0, action_size)
         else:
@@ -226,7 +226,7 @@ if __name__ == '__main__':
                 agent.append_sample(state, action, reward, next_state, done)
             else:
                 time.sleep(0.01) 
-                agent.epsilon = 0.0
+                agent.epsilon = 0.05
 
 
             # 상태 정보 업데이트 
