@@ -182,9 +182,6 @@ if __name__ == '__main__':
     env = UnityEnvironment(file_name=env_name)
 
     # 유니티 브레인 설정 
-    default_brain = env.brain_names[0]
-    brain = env.brains[default_brain]
-
     brain_name1 = env.brain_names[0]
     brain_name2 = env.brain_names[1]
 
