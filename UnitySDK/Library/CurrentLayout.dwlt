@@ -47,7 +47,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 494}
   m_MaxSize: {x: 14004, y: 14044}
   vertical: 0
-  controlID: 93
+  controlID: 56
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 329
     height: 496
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 222}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 494}
   m_MaxSize: {x: 10002, y: 14044}
   vertical: 1
-  controlID: 94
+  controlID: 57
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 222}
   m_MaxSize: {x: 8006, y: 4022}
   vertical: 0
-  controlID: 95
+  controlID: 58
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -367,20 +367,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sokoban_Curriculum/Scenes
+    - Assets/Pong/Brains
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Sokoban_Curriculum/Scenes
+  - Assets/Pong/Brains
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\Github\RLKorea_Unity_ML_Agents\UnitySDK
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b4330000
-    m_LastClickedID: 13236
-    m_ExpandedIDs: 00000000842c0000a02c0000b62c0000762f00008e31000000ca9a3b
+    m_SelectedIDs: c42d0000
+    m_LastClickedID: 11716
+    m_ExpandedIDs: 00000000842c0000a02c0000b62c0000762f00008e3100008a33000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -408,7 +408,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000842c0000a02c0000b62c0000a02d0000762f00008e310000
+    m_ExpandedIDs: 00000000842c0000a02c0000b62c0000762f00008e310000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -528,9 +528,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: faf4ffff2ef5ffffdaf6ffff14f8ffff48f8fffff8f9ffffa8faffff5efbffff
+      m_SelectedIDs: ba360000
+      m_LastClickedID: 14010
+      m_ExpandedIDs: 6efaffff5efbffffac360000da360000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
