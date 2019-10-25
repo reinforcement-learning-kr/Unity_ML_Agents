@@ -71,7 +71,7 @@ class DQNAgent():
 
         self.memory1 = deque(maxlen=mem_maxlen)
         self.memory2 = deque(maxlen=mem_maxlen)
-
+     
         self.sess = tf.Session()
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
@@ -177,8 +177,7 @@ class DQNAgent():
 
 # Main 함수 -> 전체적으로 적대적인 DQN 알고리즘을 진행 
 if __name__ == '__main__':
-
-    # 유니티 환경 경로 설정 (file_name)
+    # 유니티 환경 설정
     env = UnityEnvironment(file_name=env_name)
 
     # 유니티 브레인 설정 
