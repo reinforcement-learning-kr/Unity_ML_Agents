@@ -127,7 +127,7 @@ class DDDQN_Agent():
             self.Saver.restore(self.sess, load_path)
 
     # 엡실론 값에 따라 행동을 선택하는 함수
-    def get_action(self, state, train_mode=True):
+    def get_action(self, state):
         if self.epsilon > np.random.rand():
             return np.random.randint(0, action_size)
         else:
@@ -254,7 +254,7 @@ if __name__ == '__main__':
 
         while not done:
             step += 1
-            action = agent.get_action(state, train_mode)
+            action = agent.get_action(state)
             env_info = env.step(action)[default_brain]
             next_state = np.uint8(255 * np.array(env_info.visual_observations[0]))
 

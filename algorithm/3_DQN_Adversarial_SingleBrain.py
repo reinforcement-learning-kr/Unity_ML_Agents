@@ -85,7 +85,7 @@ class DQNAgent():
             self.Saver.restore(self.sess, load_path)
 
     # Epsilon greedy 기법에 따라 액션 결정
-    def get_action(self, state1, state2, train_mode=True):
+    def get_action(self, state1, state2):
         if self.epsilon > np.random.rand():
             # 랜덤하게 액션 결정
             random_action1 = np.random.randint(0, action_size)
@@ -222,7 +222,7 @@ if __name__ == '__main__':
             step += 1
 
             # 액션 결정 및 유니티 환경에 액션 적용 
-            action1, action2 = agent.get_action(state1, state2, train_mode)
+            action1, action2 = agent.get_action(state1, state2)
             env_info = env.step(vector_action = {brain_name: [action1, action2]})
 
             # 첫번째 에이전트에 대한 다음 상태, 보상, 게임 종료 정보 취득 
