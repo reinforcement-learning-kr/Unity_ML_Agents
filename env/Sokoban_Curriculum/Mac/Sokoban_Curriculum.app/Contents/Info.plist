@@ -26,7 +26,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.games</string>
 	<key>CFBundleName</key>
-	<string>Pong_SingleBrain</string>
+	<string>Sokoban_Curriculum</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

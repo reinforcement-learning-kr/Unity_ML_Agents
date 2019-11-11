@@ -48,7 +48,7 @@ load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
 class Model():
     def __init__(self, model_name):
         self.input = tf.placeholder(shape=[None, state_size[0], state_size[1], 
-                                    state_size[2]], dtype=tf.float32)
+                                           state_size[2]], dtype=tf.float32)
         # 입력을 -1 ~ 1까지 값을 가지도록 정규화
         self.input_normalize = (self.input - (255.0 / 2)) / (255.0 / 2)
 

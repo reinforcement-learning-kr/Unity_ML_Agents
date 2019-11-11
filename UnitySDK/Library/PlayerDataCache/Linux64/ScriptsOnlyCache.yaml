@@ -9,6 +9,8 @@ ScriptsOnlyBuild:
     - MLAgents.InferenceBrain.NNModel
     - MLAgents.LearningBrain
     - MLAgents.PlayerBrain
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule

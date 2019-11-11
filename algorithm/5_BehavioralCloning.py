@@ -97,7 +97,9 @@ class BCAgent():
     def train_model(self, data, labels):
         _, loss, accuracy = self.sess.run(
             [self.model.UpdateModel, self.model.loss, self.model.accuracy],
-            feed_dict={self.model.inputs: data, self.model.labels: labels, self.model.is_train: True})
+            feed_dict={self.model.inputs: data, 
+                       self.model.labels: labels, 
+                       self.model.is_train: True})
         return loss, accuracy
 
     # 텐서 보드에 기록할 값 설정 및 데이터 기록
@@ -106,7 +108,11 @@ class BCAgent():
         self.summary_accuracy = tf.placeholder(dtype=tf.float32)
         tf.summary.scalar("loss", self.summary_loss)
         tf.summary.scalar("accuracy", self.summary_accuracy)
-        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
+
+        Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
+        Merge = tf.summary.merge_all()
+
+        return Summary, Merge 
 
     def Write_Summray(self, loss, accuracy, epoch):
         self.Summary.add_summary(

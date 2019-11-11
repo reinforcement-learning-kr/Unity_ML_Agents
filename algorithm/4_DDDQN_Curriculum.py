@@ -8,7 +8,7 @@ from collections import deque
 from mlagents.envs import UnityEnvironment
 
 # 파라미터 설정
-state_size = [80, 80, 3]
+state_size = [84, 84, 3]
 action_size = 4
 
 load_model = False
@@ -66,7 +66,7 @@ class DDDQN_Model():
         self.input = tf.placeholder(shape=[None, state_size[0],
                                            state_size[1],
                                            state_size[2]],
-                                    dtype=tf.float32)
+                                           dtype=tf.float32)
 
         self.input_normalize = (self.input - (255.0 / 2)) / (255.0 / 2)
 
