@@ -2,23 +2,20 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - BallScript
-    - Curriculum_SokobanAcademy
-    - Curriculum_SokobanAgent
     - DodgeAgent
     - GridAgent
     - MLAgents.InferenceBrain.NNModel
     - MLAgents.LearningBrain
     - MLAgents.PlayerBrain
-    UnityEngine.UI.dll:
-    - UnityEngine.EventSystems.EventSystem
-    - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Text
+    - PongAcademy
+    - PongAgent
+    - PongGoalDetection
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     com.unity.multiplayer-hlapi.Runtime.dll:
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
-    Assets/Sokoban_Curriculum/Scenes/SokobanCurriculum.unity:
+    Assets/Pong/Pong.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -47,9 +44,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 72
       Script: {instanceID: 0}
-    - Class: 84
+    - Class: 81
       Script: {instanceID: 0}
-    - Class: 89
+    - Class: 84
       Script: {instanceID: 0}
     - Class: 92
       Script: {instanceID: 0}
@@ -70,21 +67,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9420}
     - Class: 114
-      Script: {instanceID: 9462}
-    - Class: 114
-      Script: {instanceID: 9474}
-    - Class: 114
-      Script: {instanceID: 9520}
-    - Class: 114
-      Script: {instanceID: 9600}
-    - Class: 114
-      Script: {instanceID: 9650}
-    - Class: 114
       Script: {instanceID: 9756}
     - Class: 114
       Script: {instanceID: 9870}
-    - Class: 114
-      Script: {instanceID: 10000}
     - Class: 114
       Script: {instanceID: 10160}
     - Class: 114
@@ -94,32 +79,28 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10332}
     - Class: 114
-      Script: {instanceID: 10490}
-    - Class: 114
       Script: {instanceID: 10638}
     - Class: 114
       Script: {instanceID: 10770}
     - Class: 114
       Script: {instanceID: 11222}
+    - Class: 114
+      Script: {instanceID: 11478}
+    - Class: 114
+      Script: {instanceID: 11484}
+    - Class: 114
+      Script: {instanceID: 11490}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
       Script: {instanceID: 0}
-    - Class: 128
+    - Class: 134
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
     - Class: 157
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    - Class: 258
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -188,12 +169,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.XR.LegacyInputHelpers.dll
     namespaceName: UnityEngine.XR.LegacyInputHelpers
     className: ArmModel
-  - hash:
-      serializedVersion: 2
-      Hash: 3a5d04bf817a4cf85ba43d207ec99a41
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongAcademy
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -682,12 +657,6 @@ ScriptsOnlyBuild:
     className: Ball3DDecision
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Agent2_Score
-  - hash:
-      serializedVersion: 2
       Hash: 00274a21279f5cb831ce20f895049e38
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -1138,12 +1107,6 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Agent1_Score
-  - hash:
-      serializedVersion: 2
       Hash: b0d4220f49f3a8c75f5bc02940b9378b
     assemblyName: Assembly-CSharp.dll
     namespaceName: MLAgents
@@ -1240,12 +1203,6 @@ ScriptsOnlyBuild:
     className: CameraFollow
   - hash:
       serializedVersion: 2
-      Hash: 71a870dea385d0934dd1250b97db531f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongAgent
-  - hash:
-      serializedVersion: 2
       Hash: 9182123f27e53e94e65aba0268ee495c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1286,12 +1243,6 @@ ScriptsOnlyBuild:
     assemblyName: com.unity.multiplayer-hlapi.Runtime.dll
     namespaceName: UnityEngine.Networking
     className: NetworkAnimator
-  - hash:
-      serializedVersion: 2
-      Hash: 10170241d521127ab9b0f0497d36dd1e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongGoalDetection
   - hash:
       serializedVersion: 2
       Hash: d665cfbf5acbed181545098175d241d7
@@ -1394,7 +1345,25 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 823d1056307fc03433150c3054586be2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PongAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 4084174b97b73be3c16dace03b1cc8c1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PongAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 10170241d521127ab9b0f0497d36dd1e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PongGoalDetection
   platform: 2
   scenePathNames:
-  - Assets/Sokoban_Curriculum/Scenes/SokobanCurriculum.unity
-  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Sokoban_Curriculum/Sokoban_Curriculum.app
+  - Assets/Pong/Pong.unity
+  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Pong_SingleBrain/Pong_SingleBrain.app

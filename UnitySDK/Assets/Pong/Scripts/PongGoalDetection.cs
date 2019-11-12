@@ -1,22 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PongGoalDetection : MonoBehaviour {
-
-    [Header("Pong Goal Detection Setting")]
+public class PongGoalDetection : MonoBehaviour
+{
     public PongAgent AgentA;
     public PongAgent AgentB;
-
     private Rigidbody RbBall;
-
     Vector3 ResetPos;
     Vector3 velocity;
-
-    private int agent_score1 = 0;
-    private int agent_score2 = 0;
-
     private float max_ball_speed = 10f;
     private float min_ball_speed = 5f;
 
@@ -24,7 +16,9 @@ public class PongGoalDetection : MonoBehaviour {
     {
         RbBall = GetComponent<Rigidbody>();
         ResetPos = transform.position;
+        ResetPosition();
     }
+
     public void ResetPosition()
     {
         transform.position = ResetPos;
@@ -35,34 +29,25 @@ public class PongGoalDetection : MonoBehaviour {
 
         if (rand_num < -0.5f)
         {
+            // 오른쪽 위로 공을 움직입니다.
             velocity = new Vector3(Random.Range(min_ball_speed, max_ball_speed), 0, Random.Range(min_ball_speed, max_ball_speed));
         }
         else if (rand_num < 0f)
         {
+            // 오른쪽 아래로 공을 움직입니다.
             velocity = new Vector3(Random.Range(min_ball_speed, max_ball_speed), 0, Random.Range(-max_ball_speed, -min_ball_speed));
         }
         else if (rand_num < 0.5f)
         {
+            // 왼쪽 위로 공을 움직입니다.
             velocity = new Vector3(Random.Range(-max_ball_speed, -min_ball_speed), 0, Random.Range(min_ball_speed, max_ball_speed));
         }
         else
         {
+            // 왼쪽 아래로 공을 움직입니다.
             velocity = new Vector3(Random.Range(-max_ball_speed, -min_ball_speed), 0, Random.Range(-max_ball_speed, -min_ball_speed));
         }
-
         RbBall.AddForce(velocity);
-    }
-
-    void Update()
-    {
-        if (agent_score1 == 10 || agent_score2 == 10)
-        {
-            agent_score1 = 0;
-            agent_score2 = 0;
-        }
-
-        Agent1_Score.score = agent_score1;
-        Agent2_Score.score = agent_score2;
     }
 
     void OnCollisionEnter(Collision col)
@@ -74,8 +59,6 @@ public class PongGoalDetection : MonoBehaviour {
             AgentA.OpponentScored();
             AgentA.AgentReset();
             AgentB.AgentReset();
-
-            agent_score2 = agent_score2 + 1;
         }
         if (col.gameObject.CompareTag("GoalB"))
         {
@@ -84,11 +67,12 @@ public class PongGoalDetection : MonoBehaviour {
             AgentB.OpponentScored();
             AgentA.AgentReset();
             AgentB.AgentReset();
-
-            agent_score1 = agent_score1 + 1;
         }
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
-
-
-

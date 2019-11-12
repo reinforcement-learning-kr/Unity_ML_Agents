@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brainParameters:
     vectorObservationSize: 12
-    numStackedVectorObservations: 1
+    numStackedVectorObservations: 3
     vectorActionSize: 03000000
     cameraResolutions: []
     vectorActionDescriptions:
@@ -22,4 +22,13 @@ MonoBehaviour:
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
-  discretePlayerActions: []
+  discretePlayerActions:
+  - key: 115
+    branchIndex: 0
+    value: 0
+  - key: 97
+    branchIndex: 0
+    value: 1
+  - key: 100
+    branchIndex: 0
+    value: 2
