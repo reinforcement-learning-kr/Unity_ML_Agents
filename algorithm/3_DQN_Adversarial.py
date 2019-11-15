@@ -71,7 +71,7 @@ class DQNAgent():
 
         self.memory1 = deque(maxlen=mem_maxlen)
         self.memory2 = deque(maxlen=mem_maxlen)
-
+     
         self.sess = tf.Session()
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
@@ -85,7 +85,7 @@ class DQNAgent():
             self.Saver.restore(self.sess, load_path)
 
     # Epsilon greedy 기법에 따라 액션 결정
-    def get_action(self, state1, state2, train_mode=True):
+    def get_action(self, state1, state2):
         if self.epsilon > np.random.rand():
             # 랜덤하게 액션 결정
             random_action1 = np.random.randint(0, action_size)
@@ -177,14 +177,10 @@ class DQNAgent():
 
 # Main 함수 -> 전체적으로 적대적인 DQN 알고리즘을 진행 
 if __name__ == '__main__':
-
-    # 유니티 환경 경로 설정 (file_name)
+    # 유니티 환경 설정
     env = UnityEnvironment(file_name=env_name)
 
     # 유니티 브레인 설정 
-    default_brain = env.brain_names[0]
-    brain = env.brains[default_brain]
-
     brain_name1 = env.brain_names[0]
     brain_name2 = env.brain_names[1]
 
@@ -228,7 +224,7 @@ if __name__ == '__main__':
             step += 1
 
             # 액션 결정 및 유니티 환경에 액션 적용 
-            action1, action2 = agent.get_action(state1, state2, train_mode)
+            action1, action2 = agent.get_action(state1, state2)
             env_info = env.step(vector_action = {brain_name1: [action1], brain_name2: [action2]})
 
             # 첫번째 에이전트에 대한 다음 상태, 보상, 게임 종료 정보 취득 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 
-namespace PA_DronePack_Free
-{
+namespace PA_DronePack
+{ 
 	public class DroneAgent : Agent
 	{
-		public PA_DroneController dcoScript;
+		private PA_DroneController dcoScript;
 		public GameObject goal;
 		Vector3 droneInitPos;
 		Quaternion droneInitRot;
@@ -26,7 +26,6 @@ namespace PA_DronePack_Free
 			AddVectorObs(gameObject.GetComponent<Rigidbody>().velocity);
 			AddVectorObs(gameObject.GetComponent<Rigidbody>().angularVelocity);
 		}
-
 		public override void AgentAction(float[] vectorAction, string textAction)
 		{
 			var act0 = Mathf.Clamp(vectorAction[0], -1f, 1f);
@@ -55,7 +54,6 @@ namespace PA_DronePack_Free
 				preDist = curDist;
 			}
 		}
-
 		public override void AgentReset()
 		{
 			gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;

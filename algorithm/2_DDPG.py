@@ -91,13 +91,15 @@ class DDPGAgent:
 
         action_grad = tf.gradients(tf.squeeze(self.critic.predict_q), self.critic.action)
         policy_grad = tf.gradients(self.actor.action, self.actor.trainable_var, action_grad)
+
         for idx, grads in enumerate(policy_grad):
             policy_grad[idx] = -grads/batch_size
         self.train_actor = tf.train.AdamOptimizer(actor_lr).apply_gradients(
                                                             zip(policy_grad, self.actor.trainable_var))
-
+  
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
+
         self.Saver = tf.train.Saver()
         self.Summary, self.Merge = self.Make_Summary()
         self.OU = OU_noise()
@@ -115,9 +117,11 @@ class DDPGAgent:
         
         init_update_target = []
         for idx in range(len(self.actor.trainable_var)):
-            init_update_target.append(self.target_actor.trainable_var[idx].assign(self.actor.trainable_var[idx]))
+            init_update_target.append(self.target_actor.trainable_var[idx].assign(
+                                      self.actor.trainable_var[idx]))
         for idx in range(len(self.critic.trainable_var)):
-            init_update_target.append(self.target_critic.trainable_var[idx].assign(self.critic.trainable_var[idx]))
+            init_update_target.append(self.target_critic.trainable_var[idx].assign(
+                                      self.critic.trainable_var[idx]))
         self.sess.run(init_update_target)
 
         if load_model == True:
@@ -181,7 +185,9 @@ class DDPGAgent:
 if __name__ == '__main__':
     # 유니티 환경 설정
     env = UnityEnvironment(file_name=env_name)
+
     default_brain = env.brain_names[0]
+
     # DDPGAgnet 선언
     agent = DDPGAgent()
     rewards = deque(maxlen=print_interval)

@@ -4,6 +4,15 @@ This is a repository for [Unity ML-agents](<https://unity3d.com/kr/machine-learn
 
 
 
+## Version Info.
+
+- **Unity**: 2019.1
+- **Python**: 3.6
+- **Tensorflow**: 1.12.0
+- **ML-Agents**: 0.8.1
+
+
+
 ## Algorithms
 
 All the Deep Reinforcement Learning algorithms are coded with [Python](<https://www.python.org/>) and [Tensorflow](<https://www.tensorflow.org/>). The algorithms are evaluated in Tensorflow 1.5 and above. The description of Deep Reinforcement Learning algorithms are as follows. 

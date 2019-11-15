@@ -2,21 +2,22 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - BallScript
-    - DodgeAcademy
     - DodgeAgent
+    - DroneAcademy
     - GridAgent
-    - MLAgents.BCTeacherHelper
-    - MLAgents.DemonstrationRecorder
     - MLAgents.InferenceBrain.NNModel
     - MLAgents.LearningBrain
     - MLAgents.PlayerBrain
+    - PA_DronePack.DroneAgent
+    - PA_DronePack.PA_DroneAxisInput
+    - PA_DronePack.PA_DroneController
+    - PA_DronePack.PA_ObjectID
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
-    Assets/Dodge/Dodge.unity:
+    Assets/Drone/Drone.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -47,6 +48,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 84
       Script: {instanceID: 0}
     - Class: 92
@@ -58,42 +63,48 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9286}
+      Script: {instanceID: 9262}
     - Class: 114
-      Script: {instanceID: 9354}
+      Script: {instanceID: 9288}
     - Class: 114
-      Script: {instanceID: 9356}
+      Script: {instanceID: 9302}
     - Class: 114
-      Script: {instanceID: 9400}
+      Script: {instanceID: 9370}
     - Class: 114
-      Script: {instanceID: 9420}
+      Script: {instanceID: 9372}
     - Class: 114
-      Script: {instanceID: 9756}
+      Script: {instanceID: 9418}
     - Class: 114
-      Script: {instanceID: 9850}
+      Script: {instanceID: 9438}
     - Class: 114
-      Script: {instanceID: 9870}
+      Script: {instanceID: 9776}
     - Class: 114
-      Script: {instanceID: 10160}
+      Script: {instanceID: 9804}
     - Class: 114
-      Script: {instanceID: 10200}
+      Script: {instanceID: 9832}
     - Class: 114
-      Script: {instanceID: 10294}
+      Script: {instanceID: 9888}
     - Class: 114
-      Script: {instanceID: 10332}
+      Script: {instanceID: 10186}
     - Class: 114
-      Script: {instanceID: 10638}
+      Script: {instanceID: 10226}
     - Class: 114
-      Script: {instanceID: 10692}
+      Script: {instanceID: 10312}
     - Class: 114
-      Script: {instanceID: 10770}
+      Script: {instanceID: 10320}
     - Class: 114
-      Script: {instanceID: 11096}
+      Script: {instanceID: 10358}
     - Class: 114
-      Script: {instanceID: 11222}
+      Script: {instanceID: 10668}
+    - Class: 114
+      Script: {instanceID: 10806}
+    - Class: 114
+      Script: {instanceID: 11274}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
+      Script: {instanceID: 0}
+    - Class: 134
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
@@ -101,7 +112,35 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 1b1be75d3c30d4710bf29cea95e24f8e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: DroneAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 446da847b036e0eb509af34dd7e05cc9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PhysicsPlayground
+    className: SoccerGame
+  - hash:
+      serializedVersion: 2
+      Hash: dbb0a73c3b5398c9e4f00a2901af6953
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PocketRocket
+    className: DroneSelection
+  - hash:
+      serializedVersion: 2
+      Hash: d93f4f4c1fd32dcdaf045d077e643698
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: PA_ObjectID
   - hash:
       serializedVersion: 2
       Hash: 984dcc0ba3707b7691fbdca8ff508d28
@@ -170,16 +209,16 @@ ScriptsOnlyBuild:
     className: ArmModel
   - hash:
       serializedVersion: 2
-      Hash: 3a5d04bf817a4cf85ba43d207ec99a41
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongAcademy
-  - hash:
-      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: GroupTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Turnable
   - hash:
       serializedVersion: 2
       Hash: a5781dc71a671b1ad2b38de19f24b71f
@@ -194,15 +233,21 @@ ScriptsOnlyBuild:
     className: Monitor
   - hash:
       serializedVersion: 2
+      Hash: 930fbe2bd4cf517982b1d2fdef06945a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PhysicsPlayground
+    className: Turbine
+  - hash:
+      serializedVersion: 2
       Hash: eafb77726b67b7571818a7210a3ce11e
     assemblyName: com.unity.multiplayer-hlapi.Runtime.dll
     namespaceName: UnityEngine.Networking
     className: NetworkIdentity
   - hash:
       serializedVersion: 2
-      Hash: 6d4a4c072f3fc029883dab3429060c7a
+      Hash: 50d063dea4aee72cd816e4383ad61cd5
     assemblyName: Assembly-CSharp.dll
-    namespaceName: PA_DronePack_Free
+    namespaceName: PA_DronePack
     className: PA_DroneCamera
   - hash:
       serializedVersion: 2
@@ -210,6 +255,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.Advertisements.Editor.dll
     namespaceName: UnityEngine.Advertisements.Editor
     className: Placeholder
+  - hash:
+      serializedVersion: 2
+      Hash: 40cae40633ff8b0a56998f706dc63688
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: CameraTeleportEffect
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -650,28 +701,28 @@ ScriptsOnlyBuild:
     className: NetworkProximityChecker
   - hash:
       serializedVersion: 2
-      Hash: 2f5ad28615244f70fcd6a53a6af21c1b
-    assemblyName: PA_DroneController_Free.dll
-    namespaceName: PA_DronePack_Free
-    className: PA_DroneController
-  - hash:
-      serializedVersion: 2
       Hash: 79b8e00bdcbc37098e6362f32a2e8814
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Ball3DDecision
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: f4ff78953eae98f13eab2c2e1d8a8c25
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Agent2_Score
+    namespaceName: PA_DronePack
+    className: PA_DroneController
   - hash:
       serializedVersion: 2
       Hash: 00274a21279f5cb831ce20f895049e38
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SubMeshUI
+  - hash:
+      serializedVersion: 2
+      Hash: 9182123f27e53e94e65aba0268ee495c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DroneAcademy
   - hash:
       serializedVersion: 2
       Hash: 52bcb9c2a78bdd8d98a59e915c346e75
@@ -764,12 +815,6 @@ ScriptsOnlyBuild:
     className: ReacherAcademy
   - hash:
       serializedVersion: 2
-      Hash: 9182123f27e53e94e65aba0268ee495c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: DroneAcademy
-  - hash:
-      serializedVersion: 2
       Hash: a1ec435616f7033c362e5fbfe41492c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -848,6 +893,18 @@ ScriptsOnlyBuild:
     className: BananaAgent
   - hash:
       serializedVersion: 2
+      Hash: d4d20b63c958ac225db6fe46781bab83
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: DroneDistanceLimit
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: LevelManager
+  - hash:
+      serializedVersion: 2
       Hash: 9a758af4bbb65c4fa2c02c00703359b6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -864,6 +921,24 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: MLAgents
     className: FlyCamera
+  - hash:
+      serializedVersion: 2
+      Hash: 84e58d8242436e921f284d9bc845867d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PhysicsPlayground
+    className: ColliderProxy
+  - hash:
+      serializedVersion: 2
+      Hash: 4e4d102d2c7755463bda5e16bb1f772e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: PAVR_3DJoystick
+  - hash:
+      serializedVersion: 2
+      Hash: c968c108dd814bbb83f0565bf1d70839
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PAUI_Joystick
   - hash:
       serializedVersion: 2
       Hash: 422f48e4fe97392f35c9dde63be9e292
@@ -944,9 +1019,9 @@ ScriptsOnlyBuild:
     className: SokobanAcademy
   - hash:
       serializedVersion: 2
-      Hash: e5780c316a73595a0a3810d4411ef1e1
+      Hash: 88b28e9348753733b7425230c17df745
     assemblyName: Assembly-CSharp.dll
-    namespaceName: PA_DronePack_Free
+    namespaceName: PA_DronePack
     className: PA_DroneAxisInput
   - hash:
       serializedVersion: 2
@@ -980,6 +1055,12 @@ ScriptsOnlyBuild:
     className: BouncerAcademy
   - hash:
       serializedVersion: 2
+      Hash: 4084174b97b73be3c16dace03b1cc8c1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PongAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 9182123f27e53e94e65aba0268ee495c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -996,12 +1077,6 @@ ScriptsOnlyBuild:
     assemblyName: com.unity.multiplayer-hlapi.Runtime.dll
     namespaceName: UnityEngine.Networking
     className: NetworkStartPosition
-  - hash:
-      serializedVersion: 2
-      Hash: ff3ca2f53c8a3bf589a09b3a2532b7ac
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: PA_DronePack_Free
-    className: DroneAgent
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1064,6 +1139,12 @@ ScriptsOnlyBuild:
     className: ActivationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: PAVR_DroneRemote
+  - hash:
+      serializedVersion: 2
       Hash: 318c6c13a19c9fac98135ae14889de1b
     assemblyName: com.unity.multiplayer-hlapi.Runtime.dll
     namespaceName: UnityEngine.Networking
@@ -1118,16 +1199,34 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 10170241d521127ab9b0f0497d36dd1e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Agent1_Score
+    className: PongGoalDetection
+  - hash:
+      serializedVersion: 2
+      Hash: 0d85f4fda1e0e70cd92c084d12f05cdc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: LookAt
   - hash:
       serializedVersion: 2
       Hash: b0d4220f49f3a8c75f5bc02940b9378b
     assemblyName: Assembly-CSharp.dll
     namespaceName: MLAgents
     className: JointDriveController
+  - hash:
+      serializedVersion: 2
+      Hash: 9b94b48c8d09056cc658389c423c4eb6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: EnviromentLighting
+  - hash:
+      serializedVersion: 2
+      Hash: 11fa2521e4a6151f831d0d2321ab782e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: NightLights
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1158,6 +1257,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: MLAgents
     className: AdjustTrainingTimescale
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: WebGLHideMouse
   - hash:
       serializedVersion: 2
       Hash: ee0cef6caaac8ae485bfa82f000f0f7b
@@ -1220,12 +1325,6 @@ ScriptsOnlyBuild:
     className: CameraFollow
   - hash:
       serializedVersion: 2
-      Hash: 71a870dea385d0934dd1250b97db531f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongAgent
-  - hash:
-      serializedVersion: 2
       Hash: 9182123f27e53e94e65aba0268ee495c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1256,6 +1355,30 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
+      Hash: 88b28e9348753733b7425230c17df745
+    assemblyName: PA_DronePack.dll
+    namespaceName: PA_DronePack
+    className: DroneAxisInput
+  - hash:
+      serializedVersion: 2
+      Hash: 50d063dea4aee72cd816e4383ad61cd5
+    assemblyName: PA_DronePack.dll
+    namespaceName: PA_DronePack
+    className: DroneCamera
+  - hash:
+      serializedVersion: 2
+      Hash: f4ff78953eae98f13eab2c2e1d8a8c25
+    assemblyName: PA_DronePack.dll
+    namespaceName: PA_DronePack
+    className: DroneController
+  - hash:
+      serializedVersion: 2
+      Hash: d93f4f4c1fd32dcdaf045d077e643698
+    assemblyName: PA_DronePack.dll
+    namespaceName: PA_DronePack
+    className: ObjectID
+  - hash:
+      serializedVersion: 2
       Hash: d791aa6007fa3640be1164ea75bb087d
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -1266,12 +1389,6 @@ ScriptsOnlyBuild:
     assemblyName: com.unity.multiplayer-hlapi.Runtime.dll
     namespaceName: UnityEngine.Networking
     className: NetworkAnimator
-  - hash:
-      serializedVersion: 2
-      Hash: 10170241d521127ab9b0f0497d36dd1e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PongGoalDetection
   - hash:
       serializedVersion: 2
       Hash: d665cfbf5acbed181545098175d241d7
@@ -1296,6 +1413,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ColorGradient
+  - hash:
+      serializedVersion: 2
+      Hash: 25e997dbf893fa553215293f808c40f2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PA_DronePack
+    className: ProximityCannon
   - hash:
       serializedVersion: 2
       Hash: 90a5f642addaa2a27dc290956576bebd
@@ -1370,11 +1493,17 @@ ScriptsOnlyBuild:
     className: AgentSoccer
   - hash:
       serializedVersion: 2
+      Hash: 823d1056307fc03433150c3054586be2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PongAgent
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Dodge/Dodge.unity
-  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Dodge/Dodge.app
+  - Assets/Drone/Drone.unity
+  playerPath: D:/Github/RLKorea_Unity_ML_Agents/env/Drone/Drone.app

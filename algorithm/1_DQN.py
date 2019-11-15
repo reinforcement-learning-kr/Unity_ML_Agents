@@ -48,7 +48,7 @@ load_path = "../saved_models/" + game + "/20190828-10-42-45_DQN/model/model"
 class Model():
     def __init__(self, model_name):
         self.input = tf.placeholder(shape=[None, state_size[0], state_size[1], 
-                                    state_size[2]], dtype=tf.float32)
+                                           state_size[2]], dtype=tf.float32)
         # 입력을 -1 ~ 1까지 값을 가지도록 정규화
         self.input_normalize = (self.input - (255.0 / 2)) / (255.0 / 2)
 
@@ -86,7 +86,7 @@ class DQNAgent():
         self.target_model = Model("target")
 
         self.memory = deque(maxlen=mem_maxlen)
-
+   
         self.sess = tf.Session()
         self.init = tf.global_variables_initializer()
         self.sess.run(self.init)
@@ -102,7 +102,7 @@ class DQNAgent():
             self.Saver.restore(self.sess, load_path)
 
     # Epsilon greedy 기법에 따라 행동 결정
-    def get_action(self, state, train_mode=True):
+    def get_action(self, state):
         if self.epsilon > np.random.rand():
             # 랜덤하게 행동 결정
             return np.random.randint(0, action_size)
@@ -180,7 +180,7 @@ class DQNAgent():
 # Main 함수 -> 전체적으로 DQN 알고리즘을 진행 
 if __name__ == '__main__':
     # 유니티 환경 경로 설정 (file_name)
-    env = UnityEnvironment(file_name=env_name)
+    env = UnityEnvironment(file_name=env_name, worker_id=1)
 
     # 유니티 브레인 설정 
     default_brain = env.brain_names[0]
@@ -212,7 +212,7 @@ if __name__ == '__main__':
             step += 1
 
             # 행동 결정 및 유니티 환경에 행동 적용 
-            action = agent.get_action(state, train_mode)
+            action = agent.get_action(state)
             env_info = env.step(action)[default_brain]
 
             # 다음 상태, 보상, 게임 종료 정보 취득 
@@ -227,7 +227,6 @@ if __name__ == '__main__':
             else:
                 time.sleep(0.01) 
                 agent.epsilon = 0.05
-
 
             # 상태 정보 업데이트 
             state = next_state
