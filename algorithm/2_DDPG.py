@@ -37,7 +37,7 @@ game = "Drone"
 env_name = "../env/" + game + "/Windows/" + game
 
 save_path = "../saved_models/" + game + "/" + date_time + "_DDPG"
-load_path = "../saved_models/" + game + "/20190714-18-40-51-DDPG/model/model"
+load_path = "../saved_models/" + game + "/20191115-16-37-43_DDPG/model/model"
 
 # OU_noise 클래스 -> ou noise 정의 및 파라미터 결정
 class OU_noise:
