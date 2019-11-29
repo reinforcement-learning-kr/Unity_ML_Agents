@@ -170,8 +170,11 @@ class DQNAgent():
         self.summary_reward = tf.placeholder(dtype=tf.float32)
         tf.summary.scalar("loss", self.summary_loss)
         tf.summary.scalar("reward", self.summary_reward)
-        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
+        Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
+        Merge = tf.summary.merge_all()
 
+        return Summary, Merge
+    
     def Write_Summray(self, reward, loss, episode):
         self.Summary.add_summary(
             self.sess.run(self.Merge, feed_dict={self.summary_loss: loss, 
@@ -180,7 +183,7 @@ class DQNAgent():
 # Main 함수 -> 전체적으로 DQN 알고리즘을 진행 
 if __name__ == '__main__':
     # 유니티 환경 경로 설정 (file_name)
-    env = UnityEnvironment(file_name=env_name, worker_id=1)
+    env = UnityEnvironment(file_name=env_name)
 
     # 유니티 브레인 설정 
     default_brain = env.brain_names[0]

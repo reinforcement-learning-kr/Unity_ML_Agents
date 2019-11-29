@@ -174,12 +174,15 @@ class DDPGAgent:
         self.summary_success_cnt = tf.placeholder(tf.float32)
         tf.summary.scalar("reward", self.summary_reward)
         tf.summary.scalar("success_cnt", self.summary_success_cnt)
-        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
+        Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
+        Merge = tf.summary.merge_all()
 
+        return Summary, Merge
         
     def Write_Summray(self, reward, success_cnt, episode):
         self.Summary.add_summary(self.sess.run(self.Merge, feed_dict={
-                                    self.summary_reward: reward, self.summary_success_cnt: success_cnt}), episode)
+                                    self.summary_reward: reward, 
+                                    self.summary_success_cnt: success_cnt}), episode)
 
 # Main 함수 -> DDPG 에이전트를 드론 환경에서 학습
 if __name__ == '__main__':
@@ -192,6 +195,7 @@ if __name__ == '__main__':
     agent = DDPGAgent()
     rewards = deque(maxlen=print_interval)
     success_cnt = 0
+    step = 0
 
     # 각 에피소드를 거치며 replay memory에 저장
     for episode in range(run_episode + test_episode):
@@ -202,26 +206,36 @@ if __name__ == '__main__':
         state = env_info.vector_observations[0]
         episode_rewards = 0
         done = False
+
         while not done:
+            step += 1
+
             action = agent.get_action([state])[0]
+
             env_info = env.step(action)[default_brain]
+            
             next_state = env_info.vector_observations[0]
             reward = env_info.rewards[0]
             done = env_info.local_done[0]
+
             episode_rewards += reward
+            
             if train_mode:
                 agent.append_sample(state, action, reward, next_state, done)
+
             state = next_state
 
             # train_mode 이고 일정 이상 에피소드가 지나면 학습
             if episode > start_train_episode and train_mode :
                 agent.train_model()
+
         success_cnt = success_cnt + 1 if reward == 1 else success_cnt
         rewards.append(episode_rewards)
 
         # 일정 이상의 episode를 진행 시 log 출력
         if episode % print_interval == 0 and episode != 0:
-            print(f"episode({episode}) - reward: {np.mean(rewards):.3f} success_cnt: {success_cnt} mem_len: {len(agent.memory)}  ") 
+            print("step: {} / episode: {} / reward: {:.3f} / success_cnt: {}".format
+                  (step, episode, np.mean(rewards), success_cnt))
             agent.Write_Summray(np.mean(rewards), success_cnt, episode)
             success_cnt = 0
 
