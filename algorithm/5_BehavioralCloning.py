@@ -112,7 +112,7 @@ class BCAgent():
         Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
         Merge = tf.summary.merge_all()
 
-        return Summary, Merge 
+        return Summary, Merge
 
     def Write_Summray(self, loss, accuracy, epoch):
         self.Summary.add_summary(

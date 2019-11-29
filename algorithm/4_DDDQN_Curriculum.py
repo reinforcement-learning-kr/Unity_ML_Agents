@@ -20,7 +20,7 @@ mem_maxlen = 50000
 discount_factor = 0.9
 learning_rate = 0.00005
 
-run_episode = 30000
+run_episode = 35000
 test_episode = 300
 
 start_train_episode = 500
@@ -56,7 +56,7 @@ curriculum_config = {
     'game_level': [0, 1, 2, 3],  # 게임의 레벨
     'thresholds': [0.75, 0.75, 0.75, None],  # 각 게임 레벨 별 클리어 성공률
     'start_epsilon': [1.0, 0.7, 0.7, 0.7], # 시작 앱실론 값
-    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00005],
+    'epsilon_decay': [0.0004, 0.0002, 0.0001, 0.00003],
     'min_lesson_length': 500,  # 각 게임 레벨 별 최소 수행 해야할 에피소드 수
 }
 
@@ -196,7 +196,10 @@ class DDDQN_Agent():
             tf.summary.scalar("success", self.summary_success)
             tf.summary.scalar("game_level", self.summary_game_level)
 
-        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
+        Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
+        Merge = tf.summary.merge_all()
+
+        return Summary, Merge
 
     # 텐서보드에 입력을 위한 함수
     def Write_Summray(self, reward, loss, success, game_level, episode):

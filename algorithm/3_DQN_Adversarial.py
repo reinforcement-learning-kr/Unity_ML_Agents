@@ -166,8 +166,11 @@ class DQNAgent():
         tf.summary.scalar("loss2", self.summary_loss2)
         tf.summary.scalar("reward2", self.summary_reward2)
 
-        return tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph), tf.summary.merge_all()
+        Summary = tf.summary.FileWriter(logdir=save_path, graph=self.sess.graph)
+        Merge = tf.summary.merge_all()
 
+        return Summary, Merge
+        
     def Write_Summray(self, reward1, loss1, reward2, loss2, episode):
         self.Summary.add_summary(
             self.sess.run(self.Merge, feed_dict={self.summary_loss1: loss1, 
