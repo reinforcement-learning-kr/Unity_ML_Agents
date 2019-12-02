@@ -1,10 +1,10 @@
-# RLKorea Unity ML-agents Tutorial Project
+# RLKorea Unity ML-agents 튜토리얼 프로젝트
 
-This is a repository for [Unity ML-agents](<https://unity3d.com/kr/machine-learning>) tutorial project of [Reinforcement Learning Korea](<https://www.facebook.com/groups/ReinforcementLearningKR/?ref=bookmarks>). This repository provides simple demo environments made by Unity ML-agents([Github](<https://github.com/Unity-Technologies/ml-agents>)). Also, there are deep reinforcement learning algorithms to train the agent in the provided environments. 
+이 레포지토리는 [Reinforcement Learning Korea](<https://www.facebook.com/groups/ReinforcementLearningKR/?ref=bookmarks>)의 [Unity ML-agents](<https://unity3d.com/kr/machine-learning>) 튜토리얼 프로젝트를 위한 레포입니다. 이 레포는 유니티 ML-Agents([Github](<https://github.com/Unity-Technologies/ml-agents>))로 만든 간단한 환경들을 제공합니다. 또한 제공된 환경들에서 에이전트를 학습할 수 있는 심층강화학습 알고리즘을 제공합니다. 
 
 
 
-## Version Info.
+## 버전 정보
 
 - **Unity**: 2019.1
 - **Python**: 3.6
@@ -13,46 +13,53 @@ This is a repository for [Unity ML-agents](<https://unity3d.com/kr/machine-learn
 
 
 
-## Algorithms
+## 알고리즘
 
-All the Deep Reinforcement Learning algorithms are coded with [Python](<https://www.python.org/>) and [Tensorflow](<https://www.tensorflow.org/>). The algorithms are evaluated in Tensorflow 1.5 and above. The description of Deep Reinforcement Learning algorithms are as follows. 
+모든 알고리즘은 [파이썬](<https://www.python.org/>)과 [텐서플로](<https://www.tensorflow.org/>)를 통해 작성되었습니다. 알고리즘은 텐서플로 1.5 이상에서 실행이 가능합니다. 제공하는 심층강화학습 알고리즘들은 다음과 같습니다.  
 
-1. **DQN**: Deep Q Network(DQN) algorithm([Paper](<https://web.stanford.edu/class/psych209/Readings/MnihEtAlHassibis15NatureControlDeepRL.pdf>)) for training agent in Sokoban environment.  
-2. **DDPG**: Deep Deterministic Policy Gradient (DDPG) algorithm ([Paper](<https://arxiv.org/abs/1509.02971>)) for training agent in Drone environment. 
-3. **DQN_Adversarial**: DQN algorithm for training two adversarial agents. There are two DQN network for each agent, respectively. The agents are trained to win the opponent.  This algorithm trains the agent in Pong environment. 
-4. **DDDQN_Curriculum**: DQN algorithm with Double DQN ([Paper](<https://arxiv.org/abs/1509.06461>)) and Dueling DQN ([Paper](<https://arxiv.org/abs/1511.06581>)). This algorithm is for training agent in Sokoban Curriculum environment. 
-5. **Behavioral Cloning**: Behavioral cloning algorithm for training agent in Dodge environment. This is one the the imitation learning algorithm, which imitates action of human player with supervised learning. 
-6. **MADDPG**: DDPG algorithm for Multi-agent system ([Paper](<https://arxiv.org/abs/1706.02275>)). It trains and controls multi-agents simultaneously. This algorithm trains the agents in LegAgent. 
+1. **DQN**: 소코반 환경에서 에이전트를 학습하기 위한 Deep Q Network(DQN) 알고리즘입니다 ([Paper](<https://web.stanford.edu/class/psych209/Readings/MnihEtAlHassibis15NatureControlDeepRL.pdf>)).  
+2. **DDPG**: 드론 환경에서 에이전트를 학습하기 위한 Deep Deterministic Policy Gradient (DDPG) 알고리즘입니다 ([Paper](<https://arxiv.org/abs/1509.02971>)). 
+3. **DQN_Adversarial**: 두개의 적대적인 에이전트를 학습하기 위한 DQN 알고리즘입니다. . 각 에이전트를 위한 두개의 DQN가 각각 있어서 에이전트는 상대방을 이기는 방향으로 학습을 수행합니다.  이 알고리즘은 퐁 환경에서 에이전트들의 학습을 위해 사용됩니다. 
+4. **DDDQN_Curriculum**: Double DQN ([Paper](<https://arxiv.org/abs/1509.06461>)) 과 Dueling DQN ([Paper](<https://arxiv.org/abs/1511.06581>)) 알고리즘을 적용한 DQN 알고리즘입니다. 소코반 커리큘럼 환경에서 에이전트를 학습시키기 위한 알고리즘입니다. 
+5. **Behavioral Cloning (BC)**: Behavioral cloning 알고리즘은 닷지 환경에서 에이전트를 학습하기 위한 알고리즘입니다. 모방 학습의 일종이며 사람의 데이터를 기반으로 지도학습을 통해 에이전트의 정책을 학습합니다. 
+
+   
 
 <br>
 
-## Environments
+## 환경 
 
-All the environtments are made with Unity ML-agents version 0.8. 6 demo environments are provided in this repository as follows. 
+모든 환경들은 Unity ML-agents version 0.8을 이용하여 제작되었습니다. 다음과 같은 5개의 데모 환경이 제공됩니다.
 
-### 1. Sokoban
+### 1. 소코반
 
 <img src="./images/Sokoban.gif" alt="Sokoban" style="width: 500px;"/>
 
 
 
-### 2. Drone
+### 2. 드론 
+
+드론 환경에서는 [ProfessionalAssets](https://assetstore.unity.com/publishers/31857)에서 제작한 다음의 에셋을 사용하였습니다. 
+
+- [Free Drone Pack](https://assetstore.unity.com/packages/tools/physics/free-pack-117641)
+
+- [Professional Drone Pack](https://assetstore.unity.com/packages/tools/physics/professional-drone-pack-drone-controller-vr-pc-mobile-gamepad-100970): 위 드론 에셋의 유료 버전입니다. 더 많은 환경과 드론들을 제공합니다.
 
 <img src="./images/Drone.gif" alt="Drone" style="width: 500px;"/>
 
-### 3. Pong 
+### 3. 퐁
 
 <img src="./images/Pong.gif" alt="Pong" style="width: 500px;"/>
 
 
 
-### 4. Sokoban Curriculum
+### 4. 소코반 커리큘럼
 
 <img src="./images/Sokoban_Curriculum.gif" alt="Sokoban_Curriculum" style="width: 500px;"/>
 
 
 
-### 5. Dodge
+### 5. 닷지
 
 <img src="./images/Dodge.gif" alt="Dodge" style="width: 500px;"/>
 
