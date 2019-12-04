@@ -94,7 +94,7 @@ class DQNAgent():
         self.epsilon = epsilon_init
 
         self.Saver = tf.train.Saver()
-        self.Summary, self.Merge = self.make_Summary()
+        self.Summary, self.Merge = self.Make_Summary()
 
         self.update_target()
 
@@ -165,7 +165,7 @@ class DQNAgent():
             self.sess.run(self.target_model.trainable_var[i].assign(self.model.trainable_var[i]))
 
     # 텐서보드에 기록할 값 설정 및 데이터 기록 
-    def make_Summary(self):
+    def Make_Summary(self):
         self.summary_loss = tf.placeholder(dtype=tf.float32)
         self.summary_reward = tf.placeholder(dtype=tf.float32)
         tf.summary.scalar("loss", self.summary_loss)

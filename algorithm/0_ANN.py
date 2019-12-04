@@ -41,13 +41,13 @@ class Model():
         self.y_target = tf.placeholder(tf.float32, shape=[None, 1])
 
         # 네트워크
-        self.fc1 = tf.layers.dense(self.x_input, 128, activation=tf.nn.tanh)
-        self.fc2 = tf.layers.dense(self.fc1, 128, activation=tf.nn.tanh)
-        self.fc3 = tf.layers.dense(self.fc2, 128, activation=tf.nn.tanh)
+        self.fc1 = tf.layers.dense(self.x_input, 128, activation=tf.nn.relu)
+        self.fc2 = tf.layers.dense(self.fc1, 128, activation=tf.nn.relu)
+        self.fc3 = tf.layers.dense(self.fc2, 128, activation=tf.nn.relu)
         self.out = tf.layers.dense(self.fc3, 1)
 
         # 손실 함수 계산 및 학습 수행
-        self.loss = tf.losses.mean_squared_error(self.y_target, self.out)
+        self.loss = tf.losses.mean_squared_error(labels=self.y_target, predictions=self.out)
         self.UpdateModel = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
 
 # 인공 신경망 학습을 위한 다양한 함수들 
@@ -129,6 +129,7 @@ if __name__ == '__main__':
         for batch_idx in range(0, x_train.shape[0], batch_size):
             train_loss = ann.train_model(train_x, train_y, batch_idx)
             val_loss = ann.test_model(x_valid, y_valid)
+            
             train_loss_list.append(train_loss)
             val_loss_list.append(val_loss)
             

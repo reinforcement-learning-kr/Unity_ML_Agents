@@ -83,6 +83,7 @@ class DDDQN_Model():
 
             # Dueling DQN 부분
             self.L1 = tf.layers.dense(self.flat, hidden_layer_size, activation=tf.nn.relu)
+            
             self.A1 = tf.layers.dense(self.L1, hidden_layer_size, activation=tf.nn.relu)
             self.Advantage = tf.layers.dense(self.A1, action_size, activation=None)
 
