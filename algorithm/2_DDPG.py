@@ -91,7 +91,6 @@ class DDPGAgent:
 
         action_grad = tf.gradients(tf.squeeze(self.critic.predict_q), self.critic.action)
         policy_grad = tf.gradients(self.actor.action, self.actor.trainable_var, action_grad)
-
         for idx, grads in enumerate(policy_grad):
             policy_grad[idx] = -grads/batch_size
         self.train_actor = tf.train.AdamOptimizer(actor_lr).apply_gradients(
@@ -188,7 +187,6 @@ class DDPGAgent:
 if __name__ == '__main__':
     # 유니티 환경 설정
     env = UnityEnvironment(file_name=env_name)
-
     default_brain = env.brain_names[0]
 
     # DDPGAgnet 선언
@@ -211,9 +209,7 @@ if __name__ == '__main__':
             step += 1
 
             action = agent.get_action([state])[0]
-
             env_info = env.step(action)[default_brain]
-            
             next_state = env_info.vector_observations[0]
             reward = env_info.rewards[0]
             done = env_info.local_done[0]
