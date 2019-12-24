@@ -2,6 +2,10 @@
 
 이 레포지토리는 [Reinforcement Learning Korea](<https://www.facebook.com/groups/ReinforcementLearningKR/?ref=bookmarks>)의 [Unity ML-agents](<https://unity3d.com/kr/machine-learning>) 튜토리얼 프로젝트를 위한 레포입니다. 이 레포는 유니티 ML-Agents([Github](<https://github.com/Unity-Technologies/ml-agents>))로 만든 간단한 환경들을 제공합니다. 또한 제공된 환경들에서 에이전트를 학습할 수 있는 심층강화학습 알고리즘을 제공합니다. 
 
+이 레포지토리의 내용을 정리하여 다음의 책이 출간되었습니다! ([텐서플로와 유니티 ML-Agents로 배우는 강화학습](https://wikibook.co.kr/tensorflow-mlagents/))
+
+<img src="./images/Book.png" alt="Book" style="width: 500px;"/>
+
 
 
 ## 버전 정보
